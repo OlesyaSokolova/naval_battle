@@ -23,10 +23,10 @@ const int SHIP_TYPES_NUMBER = 4;
 
 const int SHIPS_NUMBER = BATTLESHIPS_NUMBER + CRUISERS_NUMBER+DESTROYERS_NUMBER + TORPEDO_BOATS_NUMBER;
 const int PLAYERS_NUMBER = 2;
+const int DIRECTIONS = 8;
 
-enum ShotDescription {unknown, missed, injured, killed, suggested};
-enum PointCondition {blank, forbidden, partShip, wholeShip};
-enum Direction { up, left, down, right };
+//enum ShotDescription {unknown, missed, injured, killed, suggested};
+enum PointCondition {blank = (int)' ', missed, injured = (int)'X' };
 
 const std::string BATTLESHIP = "Battleship";
 const std::string CRUISER = "Cruiser";
@@ -39,3 +39,6 @@ const std::string OPTIMAL = "optimal";
 
 const std::string GRAPHIC_VIEW = "graphic";
 const std::string CONSOLE_VIEW = "console";
+
+const int INDEX_SHIFT = 1;
+const int SHIP_SIZE_SHIFT = 1;

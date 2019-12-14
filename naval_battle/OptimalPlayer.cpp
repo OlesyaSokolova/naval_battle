@@ -8,8 +8,10 @@ OptimalPlayer::OptimalPlayer()
 }
 void OptimalPlayer::setAllShips()
 {
-	while (setShipsNumber_ < 10)
-	{
-		//setShip()
-	}
+	return;
+}
+Point OptimalPlayer::choosePoint()
+{
+	Point p;
+	return p;
 }

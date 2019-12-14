@@ -1,15 +1,5 @@
 #include "Functions.h"
-int letterToIndex(const char & c)
-{
-	if (c >= 'A' && c <= 'J')
-		return c - 'A';
-	else if (c >= 'a' && c <= 'j')
-		return c - 'a';
-}
-int indexToArrayIndex(int & i)
-{
-	return i - 1;
-}
+#include <time.h>
 
 Player * createPlayer(std::string playerType)
 {
@@ -21,10 +11,25 @@ Player * createPlayer(std::string playerType)
 		return new UserPlayer;
 }
 
-View * createView(std::string viewType)
+
+bool isAccessible(const Point& point)
 {
-	if (viewType == CONSOLE_VIEW)
-		return new ConsoleView;
-	if (viewType == GRAPHIC_VIEW)
-		return new GraphicView;
+	int i = point.i_;
+	int j = point.j_;
+	if ((i >= -1) && (i <= FIELD_SIZE) && (j >= -1) && (j <= FIELD_SIZE))
+	{
+		return true;
+	}
+	return false;
+}
+
+int calcDif(int x, int y)
+{
+	int dif = y - x;
+	if (dif < 0)
+		return -1;
+	if (dif == 0)
+		return 0;
+	if (dif > 0)
+		return +1;
 }

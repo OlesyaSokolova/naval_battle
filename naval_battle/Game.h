@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
-#include "Functions.h"
+#include "View.h"
 
-class Game 
+class Game
 {
 public:
 	Game() = default;
@@ -10,9 +10,11 @@ public:
 	~Game() = default;
 	void start();
 	int round();
+	bool shoot(int playerIndex, Point p);
 private:
 	View * view_;
 	std::vector<Player*> players_;
 	int roundsNumber_;
 	int statistic_[PLAYERS_NUMBER];
+	int n = 2;
 };

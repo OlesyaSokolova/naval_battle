@@ -116,7 +116,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasePlayer.cpp" />
+    <ClCompile Include="Fields.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="ProxyRandom.cpp" />
     <ClCompile Include="Ships.cpp" />
     <ClCompile Include="UserPlayer.cpp" />
     <ClCompile Include="Functions.cpp" />
@@ -129,10 +131,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consts.h" />
+    <ClInclude Include="Fields.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="optionparser.h" />
     <ClInclude Include="Players.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="ProxyRandom.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,11 +1,12 @@
 #include <iostream>
 #include "Game.h"
+#include "optionparser.h"
 
 int main()
 {
 	RandomPlayer player1;
 	player1.setAllShips();
-	RandomPlayer player2;
-	player2.setAllShips();
+	player1.showMyField();
+	getchar();
 	return 0;
 }

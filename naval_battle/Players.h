@@ -1,25 +1,26 @@
 #include <vector>
 #include "Point.h"
-#include "Ships.h"
 class Player
 {
 public:
 	Player();
 	virtual ~Player() = 0;
 	virtual void setAllShips() = 0;
-	//virtual ShotDescription shoot(Point target);
-protected:
-	virtual bool setShip(std::vector <Point>& position);
 	void initMyField();
 	void initEnemyField();
+	void initMyShips();
+	int getRemainedShipsNumber() const;
+	std::string getPlayerType() const;
+	PointCondition askPoint(Point p) const;
+	void showMyField() const;
+protected:
+	virtual void setShip(std::vector <Point>& position);
 	bool validatePosition(std::vector <Point>&position);
-
-	Ships yourShips_;
-	int setShipsNumber_;
+	std::vector<Ship> myShips_;
 	int remainedShipsNumber_;
 	std::string playerType_;
-	PointCondition yourField_[FIELD_SIZE][FIELD_SIZE];
-	ShotDescription enemyField_[FIELD_SIZE][FIELD_SIZE];
+	PointCondition myField_[FIELD_SIZE][FIELD_SIZE];
+	PointCondition enemyField_[FIELD_SIZE][FIELD_SIZE];
 };
 
 class UserPlayer : public Player
@@ -27,6 +28,7 @@ class UserPlayer : public Player
 public:
 	UserPlayer();
 	void setAllShips() override;
+	Point choosePoint();
 };
 class RandomPlayer : public Player
 {
@@ -40,4 +42,5 @@ class OptimalPlayer : public Player
 public:
 	OptimalPlayer();
 	void setAllShips() override;
+	Point choosePoint();
 };

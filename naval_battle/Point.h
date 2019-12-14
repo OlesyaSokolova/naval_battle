@@ -1,9 +1,12 @@
 #pragma once
-class Point
+#include "Ships.h"
+struct Point
 {
-public:
-	Point(int x = 0, int y = 0);
-private:
-	int x_;
-	int y_;
+	Point();
+	Point(int i, int j);
+	Point(int i, int j, Ship* ship);
+	//operator=!!!!!!
+	int i_;
+	int j_;
+	Ship* ship_;
  };
