@@ -60,7 +60,7 @@ void Player::setShip(std::vector <Point>& position)
 	for (int i = 0; i < position.size(); i++)
 	{
 		Point p = position[i];
-		myField_[p.i_][p.j_] = injured;
+		myField_[p.getI()][p.getJ()] = injured;
 	}
 }
 
@@ -74,7 +74,7 @@ std::string Player::getPlayerType() const
 }
 PointCondition Player::askPoint(Point p) const
 {
-	return myField_[p.i_][p.j_];
+	return myField_[p.getI()][p.getJ()];
 }
 void Player::showMyField() const
 {
@@ -94,5 +94,37 @@ void Player::showMyField() const
 		}
 		std::cout << std::endl;
 		lineNumber++;
+	}
+}
+void Player::showEnemyField() const
+{
+	int lineNumber = 1;
+	std::cout << "  ";
+	for (int j = 0; j < FIELD_SIZE; j++)
+	{
+		std::cout << symbol(j) << " ";
+	}
+	std::cout << std::endl;
+	for (int i = 0; i < FIELD_SIZE; i++)
+	{
+		std::cout << lineNumber << " ";
+		for (int j = 0; j < FIELD_SIZE; j++)
+		{
+			std::cout << (char)this->enemyField_[i][j] << " ";
+		}
+		std::cout << std::endl;
+		lineNumber++;
+	}
+}
+
+void  Player::initInfoPoins(const std::vector<Point>& position, Ship* ship)
+{
+	int x, y;
+	for (int i = 0; i < position.size(); i++)
+	{
+		x = position[i].getI();
+		y = position[i].getJ();
+		InfoPoint p(x, y, ship);
+		this->infoPoints_.push_back(p);
 	}
 }

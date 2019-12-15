@@ -1,4 +1,3 @@
-#include "Functions.h"
 #include "ProxyRandom.h"
 RandomPlayer::RandomPlayer()
 	:Player()
@@ -14,7 +13,7 @@ std::vector <Point> RandomPlayer::generateRandomPosition(int shipSize)
 	while (fixed != true)
 	{
 		firstPoint = r.generateRandomPoint();
-		while (myField_[firstPoint.i_][firstPoint.j_] != blank)
+		while (myField_[firstPoint.getI()][firstPoint.getJ()] != blank)
 		{
 			firstPoint = r.generateRandomPoint();
 		}
@@ -33,7 +32,6 @@ void RandomPlayer::setAllShips()
 	int setShipsNumber = 0;
 	while (setShipsNumber < SHIPS_NUMBER)
 	{		
-	
 		Ship ship = this->myShips_[i];
 		int shipNumber = ship.getShipNumber();
 		int shipSize = ship.getShipSize();
@@ -41,10 +39,18 @@ void RandomPlayer::setAllShips()
 		{
 			position = generateRandomPosition(shipSize);
 			this->setShip(position);
+			initInfoPoins(position, &ship);
 			setShipsNumber++;
 			i++;
-		}
-		
+		}	
 	}
 	remainedShipsNumber_ = SHIPS_NUMBER;
+}
+Point RandomPlayer::choosePoint()
+{
+	srand(time(NULL));
+	int i = rand() % FIELD_SIZE;
+	int j = rand() % FIELD_SIZE;
+	Point point(i, j);
+	return point;
 }

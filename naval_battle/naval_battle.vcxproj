@@ -116,7 +116,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasePlayer.cpp" />
-    <ClCompile Include="Fields.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="ProxyRandom.cpp" />
     <ClCompile Include="Ships.cpp" />
@@ -131,7 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consts.h" />
-    <ClInclude Include="Fields.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="optionparser.h" />

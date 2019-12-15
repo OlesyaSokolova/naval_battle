@@ -5,7 +5,8 @@ Game::Game(std::vector<std::string> playerTypes, std::string viewType, int round
 {
 	for (int i = 0; i < PLAYERS_NUMBER; i++)
 	{
-		players_[i] = createPlayer(playerTypes[i]);
+		Player* player = createPlayer(playerTypes[i]);
+		this->players_.push_back(player);
 	}
 	view_ = createView(viewType);
 }
@@ -20,15 +21,15 @@ void Game::start()
 }
 bool Game::shoot(int playerIndex, Point p)
 {
-	int enemyIndex = (playerIndex + 1) % 2;
+	int enemyIndex = (playerIndex + INDEX_SHIFT) % PLAYERS_NUMBER;
 	PointCondition res = this->players_[enemyIndex]->askPoint(p); 
-	bool result = (res > 0) ? 1 : 0;
+	bool result = (res == injured) ? 1 : 0;
 	return result;
 }
 int Game::round()
 {
 	this->view_->initPlayers(players_);
-	int firstPlayer = this->view_->chooseFirstPlayer();
+	int firstPlayer = this->view_->chooseFirstPlayer(players_);
 	int playerIndex = firstPlayer;
 	bool result;
 	while (players_[0]->getRemainedShipsNumber() > 0 && players_[1]->getRemainedShipsNumber() > 0)

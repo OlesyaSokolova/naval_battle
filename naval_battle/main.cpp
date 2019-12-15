@@ -4,9 +4,11 @@
 
 int main()
 {
-	RandomPlayer player1;
-	player1.setAllShips();
-	player1.showMyField();
+	std::vector<std::string> playerTypes = { RANDOM, USER };
+	std::string viewType = CONSOLE_VIEW;
+	int n = 1;
+	Game game(playerTypes, viewType, n);
+	game.start();
 	getchar();
 	return 0;
 }

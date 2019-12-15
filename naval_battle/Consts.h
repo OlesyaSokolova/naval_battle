@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 
 const int FIELD_SIZE = 10;
@@ -24,9 +24,13 @@ const int SHIP_TYPES_NUMBER = 4;
 const int SHIPS_NUMBER = BATTLESHIPS_NUMBER + CRUISERS_NUMBER+DESTROYERS_NUMBER + TORPEDO_BOATS_NUMBER;
 const int PLAYERS_NUMBER = 2;
 const int DIRECTIONS = 8;
+const int POINT_PARAMETERS = 2;
 
 //enum ShotDescription {unknown, missed, injured, killed, suggested};
-enum PointCondition {blank = (int)' ', missed, injured = (int)'X' };
+enum PointCondition {blank = (int)' ', missed, injured = (int)'x' };
+
+const std::string DELIMITER_1 = " ";
+const char DELIMITER_2 = '\n';
 
 const std::string BATTLESHIP = "Battleship";
 const std::string CRUISER = "Cruiser";
@@ -40,5 +44,11 @@ const std::string OPTIMAL = "optimal";
 const std::string GRAPHIC_VIEW = "graphic";
 const std::string CONSOLE_VIEW = "console";
 
+const int MAX_INPUT_LINE_SIZE = 11;
 const int INDEX_SHIFT = 1;
 const int SHIP_SIZE_SHIFT = 1;
+const int shipFirstDi[DIRECTIONS] = { -1, 1, 1, 1, 1, -1, -1, -1 };
+const int shipFirstDj[DIRECTIONS] = { 1, 1, 1, -1, -1, -1, -1, 1 };
+
+const int shipLastDi[DIRECTIONS] = { 1, -1, -1, -1, -1, 1, 1, 1 };
+const int shipLastDj[DIRECTIONS] = { -1, -1, -1, 1, 1, 1, 1, -1 };

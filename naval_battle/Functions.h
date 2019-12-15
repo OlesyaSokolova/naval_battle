@@ -1,16 +1,7 @@
 #pragma once
-#include "Consts.h"
 #include "Players.h"
-#include "Fields.h"
-#include <iostream>
+#include <time.h>
 
-inline int letterToIndex(const char & c)
-{
-	if (c >= 'A' && c <= 'J')
-		return c - 'A';
-	else if (c >= 'a' && c <= 'j')
-		return c - 'a';
-}
 inline int indexToArrayIndex(int & i)
 {
 	return i - 1;
@@ -32,3 +23,4 @@ inline char symbol(int j)
 	return c;
 }
 int calcDif(int x, int y);
+std::vector<std::string> parsingString(std::string line, std::string delim);

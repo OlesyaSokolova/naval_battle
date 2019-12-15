@@ -48,9 +48,6 @@
     <ClCompile Include="RandomPlayer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Fields.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="ProxyRandom.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -75,9 +72,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="optionparser.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Fields.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ProxyRandom.h">

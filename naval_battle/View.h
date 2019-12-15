@@ -7,7 +7,7 @@ public:
 	virtual ~View() = default;
 	void initPlayers(std::vector<Player*> players);
 	friend void printInitMessage(std::string playerType);
-	int chooseFirstPlayer();
+	int chooseFirstPlayer(const std::vector<Player*> players);
     Point playerTurn(int playerIndex);
 	void updateFields(int playerIndex, int result);
 private:
