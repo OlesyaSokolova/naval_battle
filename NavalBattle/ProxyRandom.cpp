@@ -2,20 +2,32 @@
 #include <time.h>
 #include <algorithm>
 
-Point ProxyRandom::generateRandomPoint()
-{
-	srand(time(NULL));
-	int i = rand() % FIELD_SIZE;
-	int j = rand() % FIELD_SIZE;
-	Point point(i, j);
-	return point;
-}
 ProxyRandom::ProxyRandom(int shipSize)
 	: dif_(shipSize + SHIP_SIZE_SHIFT),
 	di{ -2, 2, dif_, dif_, 2, -2, -dif_, -dif_ },
 	dj{ dif_, dif_, 2, -2, -dif_, -dif_, -2, +2 },
 	direction_(0)
-{}
+{
+	for (int i = 0; i < FIELD_SIZE; i++)
+	{
+		for (int j = 0; j < FIELD_SIZE; j++)
+		{
+			this->pointsToUse.push_back(Point(i, j));
+		}
+	}
+}
+
+Point ProxyRandom::generateRandomPoint()
+{
+	srand(time(NULL));
+	int vectorSize = this->pointsToUse.size();
+	int index = rand() % vectorSize;
+	Point point = this->pointsToUse[index];
+	std::swap(this->pointsToUse[index], this->pointsToUse[vectorSize - 1]);
+	this->pointsToUse.pop_back();
+	return point;
+}
+
 
 bool ProxyRandom::areaIsBlank(const Player* player, const Point& firstPoint, const Point& lastPoint)
 {
@@ -56,6 +68,28 @@ bool ProxyRandom::fixLastPoint(const Player* player, const Point& firstPoint, Po
 	this->direction_ = dir;
 	return true;
 }
+bool ProxyRandom::fixLastPoint(const Player* player, const Point& firstPoint, Point& lastPoint, int line)
+{
+	int i = firstPoint.i_;
+	int j = firstPoint.j_;
+	int dir = this->direction_;
+	bool isBlank = this->areaIsBlank(player, firstPoint, lastPoint);
+	bool isGood = isAccessible(lastPoint);
+	int counter = 0;
+	while (isBlank == false || isGood == false)
+	{
+		dir = kForLines[line][(counter+INDEX_SHIFT)% K_VARIANTS_FOR_LINES];
+		if (counter == K_VARIANTS_FOR_LINES)
+			return false;
+		lastPoint.i_ = i + di[dir];
+		lastPoint.j_ = j + dj[dir];
+		isBlank = this->areaIsBlank(player, firstPoint, lastPoint);
+		isGood = isAccessible(lastPoint);
+		counter++;
+	}
+	this->direction_ = dir;
+	return true;
+}
 Point ProxyRandom::generateLastPoint(const Point& firstPoint, int shipSize)
 {
 	srand(time(NULL));
@@ -69,7 +103,7 @@ Point ProxyRandom::generateLastPoint(const Point& firstPoint, int shipSize)
 Point ProxyRandom::generateLastPoint(const Point& firstPoint, int shipSize, int line)
 {
 	srand(time(NULL));
-	int direction = rand() % DIRECTIONS;
+	int direction = kForLines[line][rand() % K_VARIANTS_FOR_LINES];
 	int li = firstPoint.i_ + this->di[direction];
 	int lj = firstPoint.j_ + this->dj[direction];
 	Point lastPoint(li, lj);

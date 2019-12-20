@@ -1,4 +1,3 @@
-#pragma once
 #include "Point.h"
 class Player
 {
@@ -8,7 +7,7 @@ public:
 	void initMyField();
 	void initEnemyField();
 	void initMyShips();
-	void setAllShips();
+	virtual void setAllShips();
 	int getRemainedShipsNumber() const;
 	std::string getPlayerType() const;
 	PointCondition askPoint(Point p) const;
@@ -44,7 +43,9 @@ class OptimalPlayer : public Player
 {
 public:
 	OptimalPlayer();
-	std::vector <Point> generateRandomPosition(int shipSize) override;
+	std::vector <Point>generateRandomPositionOptimally(int shipSize);
+	void setAllShips() override;
 	Point choosePoint()override;
 	std::vector<Point> successfulPoints;
+	std::vector<Point> pointsOnLines[DIRECTIONS_NUMBER];
 };

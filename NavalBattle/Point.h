@@ -1,6 +1,4 @@
-#pragma once
-#include "Ship.h"
-#include <iostream>
+#include "Ships.h"
 class Point
 {
 public:
@@ -27,4 +25,3 @@ public:
 private:
 	Ship* ship_;
 };
-

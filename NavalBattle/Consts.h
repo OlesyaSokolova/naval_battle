@@ -1,4 +1,4 @@
-#pragma once
+
 #include <string>
 
 const int FIELD_SIZE = 10;
@@ -25,6 +25,7 @@ const int SHIPS_NUMBER = BATTLESHIPS_NUMBER + CRUISERS_NUMBER + DESTROYERS_NUMBE
 const int PLAYERS_NUMBER = 2;
 const int DIRECTIONS = 8;
 const int POINT_PARAMETERS = 2;
+const int POINTS_NUMBER_ON_LINE = 8;
 
 //enum ShotDescription {unknown, missed, injured, killed, suggested};
 enum PointCondition { blank = (int)' ', missed, injured = (int)'x' };
@@ -55,8 +56,8 @@ const int shipFirstDj[DIRECTIONS] = { 1, 1, 1, -1, -1, -1, -1, 1 };
 
 const int shipLastDi[DIRECTIONS] = { 1, -1, -1, -1, -1, 1, 1, 1 };
 const int shipLastDj[DIRECTIONS] = { -1, -1, -1, 1, 1, 1, 1, -1 };
-const int kForLines[DIRECTIONS_NUMBER][K_VARIANTS_FOR_LINES] = { 6, 3,
+const int kForLines[DIRECTIONS_NUMBER][K_VARIANTS_FOR_LINES] = { 0, 5,
 7, 2,
 4, 1,
-0, 5,
+6, 3,
 };

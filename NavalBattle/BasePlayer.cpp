@@ -44,7 +44,7 @@ void Player::setAllShips()
 		{
 			position = generateRandomPosition(shipSize);
 			this->setShip(position);
-			initInfoPoins(position, &ship);
+			initInfoPoins(position, &myShips_[i]);
 			setShipsNumber++;
 			i++;
 		}
@@ -94,6 +94,8 @@ std::string Player::getPlayerType() const
 }
 PointCondition Player::askPoint(Point p) const
 {
+	if (p.getI() < 0 || p.getJ() < 0)
+		return blank;
 	return myField_[p.getI()][p.getJ()];
 }
 

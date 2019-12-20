@@ -31,6 +31,26 @@ void View::showPlayerField(const Player* player)
 		lineNumber++;
 	}
 }
+void View::showPlayerEnemyField(const Player* player)
+{
+	int lineNumber = 0;
+	std::cout << "  ";
+	for (int j = 0; j < FIELD_SIZE; j++)
+	{
+		std::cout << symbol(j) << " ";
+	}
+	std::cout << std::endl;
+	for (int i = 0; i < FIELD_SIZE; i++)
+	{
+		std::cout << lineNumber << " ";
+		for (int j = 0; j < FIELD_SIZE; j++)
+		{
+			std::cout << (char)player->enemyField_[i][j] << " ";
+		}
+		std::cout << std::endl;
+		lineNumber++;
+	}
+}
 void View::updatePlayerField(const Player* player)
 {
 	system("cls");
@@ -66,7 +86,7 @@ void View::setAllUserShips()
 			int j_ = position[0].getJ();
 			if (i_ == -1 && j_ == -1)
 			{
-				std::cout << "Ok! Your ships will be set randomly. PLease, wait a bit..." << std::endl;
+				std::cout << "Ok! Your ships will be set randomly." << std::endl;
 				player->setAllShips();
 				break;
 			}
@@ -100,12 +120,15 @@ void View::initPlayers()
 			std::cout << "This is your field:" << std::endl;
 			this->showPlayerField(players_[i]);
 			std::cout << "and this is your enemy's field:" << std::endl;
-			this->showPlayerField(players_[(i + 1) % 2]);
+			this->showPlayerEnemyField(players_[i]);
 		}
-		if (players_[i]->getPlayerType() == RANDOM && players_[(i + 1) % 2]->getPlayerType() == USER)
+		if (players_[i]->getPlayerType() == RANDOM)
 		{
-			std::cout << "Player #" << i << " sets his ships randomly. It's quite difficult\n" <<
-				"for him because he is just a bot, so wait for a while, please." << std::endl;
+			players_[i]->setAllShips();
+			std::cout << "Player #" << i << " is ready!" << std::endl;
+		}
+		if (players_[i]->getPlayerType() == OPTIMAL)
+		{
 			players_[i]->setAllShips();
 			std::cout << "Player #" << i << " is ready!" << std::endl;
 		}

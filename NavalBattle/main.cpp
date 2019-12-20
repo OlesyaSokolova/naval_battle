@@ -3,7 +3,7 @@
 
 int main()
 {
-	std::vector<std::string> playerTypes = { USER, RANDOM };
+	std::vector<std::string> playerTypes = { OPTIMAL, USER };
 	std::string viewType = CONSOLE_VIEW;
 	int n = 1;
 	Game game(playerTypes, viewType, n);

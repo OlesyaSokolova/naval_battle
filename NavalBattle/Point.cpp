@@ -1,5 +1,6 @@
 #include "Point.h"
 #include <iostream>
+
 Point::Point()
 	:i_(0), j_(0) {}
 
@@ -14,7 +15,6 @@ int Point::getJ() const
 {
 	return this->j_;
 }
-
 InfoPoint::InfoPoint(int i, int j, Ship* ship)
 	:Point(i, j), ship_(ship) {}
 

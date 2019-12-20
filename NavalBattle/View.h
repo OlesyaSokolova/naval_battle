@@ -1,4 +1,3 @@
-#pragma once
 #include "Functions.h"
 class View
 {
@@ -14,6 +13,7 @@ public:
 	void updateFields(int playerIndex, int result);
 	std::vector<Point> readPosition();
 	void setAllUserShips();
+	void showPlayerEnemyField(const Player* player);
 	void addPlayers(std::vector<Player*> players);
 private:
 	std::vector<Player*> players_;
