@@ -38,3 +38,7 @@ int Ship::getShipNumber() const
 {
 	return this->number_;
 }
+void Ship::decreaseSize()
+{
+	this->shipSize_--;
+}

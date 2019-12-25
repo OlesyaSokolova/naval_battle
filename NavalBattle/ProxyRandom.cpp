@@ -40,7 +40,7 @@ bool ProxyRandom::areaIsBlank(const Player* player, const Point& firstPoint, con
 		for (int j = areaRange_j_min; j <= areaRange_j_max && j < FIELD_SIZE; j++)
 		{
 			Point p(i, j);
-			if (player->askPoint(p) != blank)
+			if (player->checkPoint(p) != blank)
 				return false;
 		}
 	}

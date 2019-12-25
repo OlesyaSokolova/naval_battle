@@ -1,23 +1,26 @@
 #include "Functions.h"
+#include <algorithm>
+#include <unordered_map>
 class View
 {
 public:
-	View() = default;
+	View();
 	virtual ~View() = default;
 	void initPlayers();
-	friend void printInitMessage(std::string playerType);
 	int chooseFirstPlayer();
 	Point playerTurn(int playerIndex);
 	void showPlayerField(const Player* player);
 	void updatePlayerField(const Player* player);
-	void updateFields(int playerIndex, int result);
+	void updateFields(int playerIndex, shotResult result);
 	std::vector<Point> readPosition();
 	void setAllUserShips();
 	void showPlayerEnemyField(const Player* player);
+	void updatePlayerEnemyField(const Player* player);
 	void addPlayers(std::vector<Player*> players);
 private:
 	std::vector<Player*> players_;
 	int userIndex_;
+	std::unordered_map <shotResult, std::string, std::hash<int>> resultMessages;
 };
 
 class GraphicView : public View

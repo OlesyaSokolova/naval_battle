@@ -9,7 +9,6 @@ UserPlayer::UserPlayer()
 
 Point UserPlayer::choosePoint()
 {
-	//view_:friend show choosing
 	std::cout << "Enter a point to shoot:";
 	InfoPoint p;
 	p.readPoint();

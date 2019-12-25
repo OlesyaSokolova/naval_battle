@@ -9,9 +9,11 @@ public:
 	int getShipSize() const;
 	std::string getShipName() const;
 	int getShipNumber() const;
+	void decreaseSize();
 	~Ship() = default;
-protected:
+private:
 	std::string shipName_;
 	int number_;
 	int shipSize_;
+	int size_;
 };

@@ -22,6 +22,7 @@ class InfoPoint : public Point
 public:
 	InfoPoint() = default;
 	InfoPoint(int i, int j, Ship* ship);
+	shotResult decreaseShipCounter() const;
 private:
 	Ship* ship_;
 };

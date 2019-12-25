@@ -30,7 +30,7 @@ void Player::initMyShips()
 		myShips_.push_back(ship);
 	}
 }
-void Player::setAllShips()
+void Player::setAllShipsRandomly()
 {
 	std::vector <Point> position;
 	int i = 0;
@@ -61,26 +61,23 @@ void Player::initMyField()
 		}
 	}
 }
+
 void Player::initEnemyField()
 {
 	for (int i = 0; i < FIELD_SIZE; i++)
 	{
 		for (int j = 0; j < FIELD_SIZE; j++)
 		{
-			this->enemyField_[i][j] = blank;
+			this->enemyField_[i][j] = unknown;
 		}
 	}
-}
-bool Player::validatePosition(std::vector <Point>&position)
-{
-	return true;
 }
 void Player::setShip(std::vector <Point>& position)
 {
 	for (int i = 0; i < position.size(); i++)
 	{
 		Point p = position[i];
-		myField_[p.getI()][p.getJ()] = injured;
+		myField_[p.getI()][p.getJ()] = ship;
 	}
 }
 
@@ -92,11 +89,21 @@ std::string Player::getPlayerType() const
 {
 	return this->playerType_;
 }
-PointCondition Player::askPoint(Point p) const
+shotResult Player::askPoint(Point p)
 {
-	if (p.getI() < 0 || p.getJ() < 0)
-		return blank;
-	return myField_[p.getI()][p.getJ()];
+	shotResult res = missed;
+	for (int i = 0; i < this->infoPoints_.size(); i++)
+	{
+		if (this->infoPoints_[i].getI() == p.getI() && this->infoPoints_[i].getJ() == p.getJ())
+		{
+			res = infoPoints_[i].decreaseShipCounter();
+			int vectorSize = this->infoPoints_.size();
+			std::swap(this->infoPoints_[i], this->infoPoints_[vectorSize - 1]);
+			infoPoints_.pop_back();
+			return res;
+		}
+	}
+	return res;
 }
 
 std::vector <Point> Player::generateRandomPosition(int shipSize)
@@ -129,4 +136,29 @@ void  Player::initInfoPoins(const std::vector<Point>& position, Ship* ship)
 		InfoPoint p(x, y, ship);
 		this->infoPoints_.push_back(p);
 	}
+}
+
+PointCondition Player::checkPoint(Point p) const
+{
+	PointCondition res = this->myField_[p.getI()][p.getJ()];
+	return res;
+}
+void Player::setMyShotResult(Point p, shotResult result)
+{
+	this->enemyField_[p.getI()][p.getJ()] = result;
+}
+void Player::setEnemyShotResult(Point p, shotResult result)
+{
+	PointCondition res;
+	if (result == missed)
+		res = enemyMissed;
+	else
+	{
+		res = enemyInjured;
+		if (result == killed)
+		{
+			this->remainedShipsNumber_--;
+		}
+	}
+	this->myField_[p.getI()][p.getJ()] = res;
 }

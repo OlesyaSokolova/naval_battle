@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include <iostream>
 Game::Game(std::vector<std::string> playerTypes, std::string viewType, int roundsNumber = 1)
 	:roundsNumber_(roundsNumber), statistic_{ 0 }
 {
@@ -19,26 +19,34 @@ void Game::start()
 		winnerIndex = this->round();
 		this->statistic_[winnerIndex]++;
 	}
+	std::cout << "Winner: " << winnerIndex << " (" << this->players_[winnerIndex]->getPlayerType() << ")" << std::endl;
+	getchar();
 }
-bool Game::shoot(int playerIndex, Point p)
+shotResult Game::shoot(int playerIndex, Point p)
 {
 	int enemyIndex = (playerIndex + INDEX_SHIFT) % PLAYERS_NUMBER;
-	PointCondition res = this->players_[enemyIndex]->askPoint(p);
-	bool result = (res == injured) ? 1 : 0;
-	return result;
+	shotResult res = this->players_[enemyIndex]->askPoint(p);
+	this->players_[playerIndex]->setMyShotResult(p, res);
+	this->players_[enemyIndex]->setEnemyShotResult(p, res);
+	return res;
 }
 int Game::round()
 {
 	this->view_->initPlayers();
 	int firstPlayer = this->view_->chooseFirstPlayer();
 	int playerIndex = firstPlayer;
-	bool result;
-	while (players_[0]->getRemainedShipsNumber() > 0 && players_[1]->getRemainedShipsNumber() > 0)
+	shotResult result;
+	int shipsNumberFirst = players_[0]->getRemainedShipsNumber();
+	int shipsNumberSecond = players_[1]->getRemainedShipsNumber();
+	int k = 0;
+	while (shipsNumberFirst > 0 && shipsNumberSecond > 0)
 	{
 		Point p = view_->playerTurn(playerIndex);
 		result = shoot(playerIndex, p);
-		//view_->updateFields(playerIndex, result);
+		view_->updateFields(playerIndex, result);
 		playerIndex = nextPlayer(playerIndex, result);
+		shipsNumberFirst = players_[0]->getRemainedShipsNumber();
+		shipsNumberSecond = players_[1]->getRemainedShipsNumber();
 	}
 	return playerIndex;
 }

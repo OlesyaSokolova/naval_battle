@@ -23,11 +23,23 @@ OptimalPlayer::OptimalPlayer()
 	{
 		pointsOnLines[3].push_back(Point(i, 1));
 	}
+	for (int i = 0; i < FIELD_SIZE; i++)
+	{
+		for (int j = 0; j < FIELD_SIZE; j++)
+		{
+			this->pointsToUse.push_back(Point(i, j));
+		}
+	}
 }
 Point OptimalPlayer::choosePoint()
 {
-	Point p;
-	return p;
+	srand(time(NULL));
+	int vectorSize = this->pointsToUse.size();
+	int index = rand() % vectorSize;
+	Point point = this->pointsToUse[index];
+	std::swap(this->pointsToUse[index], this->pointsToUse[vectorSize - 1]);
+	this->pointsToUse.pop_back();
+	return point;
 }
 std::vector <Point>  OptimalPlayer::generateRandomPositionOptimally(int shipSize)
 {
@@ -73,7 +85,7 @@ std::vector <Point>  OptimalPlayer::generateRandomPositionOptimally(int shipSize
 	position = r.getPosition(firstPoint, lastPoint);
 	return position;
 }
-void OptimalPlayer::setAllShips()
+void OptimalPlayer::setAllShipsRandomly()
 {
 	std::vector <Point> position;
 	int i = 0;

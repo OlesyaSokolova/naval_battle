@@ -56,3 +56,12 @@ void Point::readPoint()
 		}
 	}
 }
+shotResult InfoPoint::decreaseShipCounter() const
+{
+	this->ship_->decreaseSize();
+	if (ship_->getShipSize() == 0)
+	{
+		return killed;
+	}
+	return injured;
+}

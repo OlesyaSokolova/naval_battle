@@ -27,8 +27,8 @@ const int DIRECTIONS = 8;
 const int POINT_PARAMETERS = 2;
 const int POINTS_NUMBER_ON_LINE = 8;
 
-//enum ShotDescription {unknown, missed, injured, killed, suggested};
-enum PointCondition { blank = (int)' ', missed, injured = (int)'x' };
+enum PointCondition { blank = (int)' ', ship = (int)'x', enemyInjured = (int)'#', enemyMissed = (int)'o'};
+enum shotResult {unknown = (int)' ', missed = (int)'o', injured = (int)'x', killed};
 
 const std::string DELIMITER_1 = " ";
 const char DELIMITER_2 = '\n';
@@ -51,6 +51,7 @@ const int MAX_INPUT_LINE_SIZE = 11;
 const int INDEX_SHIFT = 1;
 const int SHIP_SIZE_SHIFT = 1;
 const int K_VARIANTS_FOR_LINES = 2;
+
 const int shipFirstDi[DIRECTIONS] = { -1, 1, 1, 1, 1, -1, -1, -1 };
 const int shipFirstDj[DIRECTIONS] = { 1, 1, 1, -1, -1, -1, -1, 1 };
 
@@ -61,3 +62,4 @@ const int kForLines[DIRECTIONS_NUMBER][K_VARIANTS_FOR_LINES] = { 0, 5,
 4, 1,
 6, 3,
 };
+const int RESULT_VARIANTS = 4;
