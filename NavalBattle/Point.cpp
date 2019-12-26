@@ -20,6 +20,7 @@ std::string Point::getOriginalInput() const
 {
 	char res[POINT_PARAMETERS + INDEX_SHIFT];
 	strcpy_s(res, i_j_);
+	std::swap(res[0], res[1]);
 	std::string result = (std::string)res;
 	return result;
 }
@@ -63,7 +64,7 @@ void Point::readPoint()
 	}
 
 }
-shotResult InfoPoint::decreaseShipCounter() const
+ShotResult InfoPoint::decreaseShipCounter() const
 {
 	this->ship_->decreaseSize();
 	if (ship_->getShipSize() == 0)

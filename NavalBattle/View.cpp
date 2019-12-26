@@ -139,7 +139,7 @@ void View::initPlayers()
 		this->showPlayerEnemyField(players_[userIndex_]);
 		int anotherPlayerIndex = (userIndex_ + INDEX_SHIFT) % PLAYERS_NUMBER;
 		players_[anotherPlayerIndex]->setAllShipsRandomly();
-		std::cout << "Player #" << anotherPlayerIndex << " is ready!" << std::endl;
+		std::cout << "Your enemy is ready!" << std::endl;
 	}
 	else 
 		for (int i = 0; i < PLAYERS_NUMBER; i++)
@@ -173,11 +173,7 @@ Point View::playerTurn(int playerIndex)
 		if (userIndex_ == playerIndex)
 		{
 			pointIsCorrect = isAccessible(p);
-			if (pointIsCorrect == false)
-			{
-				pointIsNew = false;
-			}
-			else
+			if (pointIsCorrect == true)
 			{
 				pointIsNew = players_[userIndex_]->enemyField_[p.getI()][p.getJ()] == unknown ? true : false;
 			}
@@ -201,31 +197,27 @@ Point View::playerTurn(int playerIndex)
 		else
 		{
 			std::cout << "Your enemy turn: " << p.getOriginalInput() << std::endl;
-			std::cout << "Please, press ENTER to continue.";
+			std::cout << "Please, press ENTER to check this point at your field.";
 			getchar();
 		}
 		
 	}
 	return p;
 }
-void View::updateFields(int playerIndex, shotResult result)
+void View::updateFields(int playerIndex, ShotResult result)
 {
 	if (this->players_[playerIndex]->getPlayerType() == USER)
 	{	
 		this->updatePlayerEnemyField(this->players_[playerIndex]);
 		std::cout << this->userResultMessages[result] << std::endl;
-		//std::cout << "Please, press ENTER to continue.";
 		getchar();
 	}
 	else
 	{
 		if (userIndex_ != -1)
 		{		
-			if (playerIndex != userIndex_)
-			{
 				this->updatePlayerEnemyField(this->players_[userIndex_]);
-				std::cout << this->enemyResultMessages[result] << std::endl;
-			}		
+				std::cout << this->enemyResultMessages[result] << std::endl;		
 		}
 		else
 		{
@@ -268,13 +260,13 @@ std::vector<Point> View::readPosition()
 		Point p;
 		if (points[i].size() > 2)
 		{
-			std::cout << "wrong input point: " << points[i] << ". Please, Try again." << std::endl;
+			std::cout << "Wrong input point: " << points[i] << ". Please, Try again." << std::endl;
 			return position;
 		}
 		p.getPoint(points[i]);
 		if (!isAccessible(p))
 		{
-			std::cout << "wrong input point: " << points[i] << ". Please, Try again." << std::endl;
+			std::cout << "Wrong input point: " << points[i] << ". Please, Try again." << std::endl;
 		}
 		position.push_back(p);
 	}

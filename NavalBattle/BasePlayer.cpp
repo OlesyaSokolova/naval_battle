@@ -89,9 +89,9 @@ std::string Player::getPlayerType() const
 {
 	return this->playerType_;
 }
-shotResult Player::askPoint(Point p)
+ShotResult Player::askPoint(Point p)
 {
-	shotResult res = missed;
+	ShotResult res = missed;
 	for (int i = 0; i < this->infoPoints_.size(); i++)
 	{
 		if (this->infoPoints_[i].getI() == p.getI() && this->infoPoints_[i].getJ() == p.getJ())
@@ -143,11 +143,11 @@ PointCondition Player::checkPoint(Point p) const
 	PointCondition res = this->myField_[p.getI()][p.getJ()];
 	return res;
 }
-void Player::setMyShotResult(Point p, shotResult result)
+void Player::setMyShotResult(Point p, ShotResult result)
 {
 	this->enemyField_[p.getI()][p.getJ()] = result;
 }
-void Player::setEnemyShotResult(Point p, shotResult result)
+void Player::setEnemyShotResult(Point p, ShotResult result)
 {
 	PointCondition res;
 	if (result == missed)

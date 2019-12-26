@@ -9,7 +9,7 @@ public:
 	~Game() = default;
 	void start();
 	int round();
-	shotResult shoot(int playerIndex, Point p);
+	ShotResult shoot(int playerIndex, Point p);
 private:
 	View * view_;
 	std::vector<Player*> players_;

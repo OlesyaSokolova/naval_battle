@@ -22,10 +22,10 @@ void Game::start()
 	std::cout << "Winner: " << winnerIndex << " (" << this->players_[winnerIndex]->getPlayerType() << ")" << std::endl;
 	getchar();
 }
-shotResult Game::shoot(int playerIndex, Point p)
+ShotResult Game::shoot(int playerIndex, Point p)
 {
 	int enemyIndex = (playerIndex + INDEX_SHIFT) % PLAYERS_NUMBER;
-	shotResult res = this->players_[enemyIndex]->askPoint(p);
+	ShotResult res = this->players_[enemyIndex]->askPoint(p);
 	this->players_[playerIndex]->setMyShotResult(p, res);
 	this->players_[enemyIndex]->setEnemyShotResult(p, res);
 	return res;
@@ -35,7 +35,7 @@ int Game::round()
 	this->view_->initPlayers();
 	int firstPlayer = this->view_->chooseFirstPlayer();
 	int playerIndex = firstPlayer;
-	shotResult result;
+	ShotResult result;
 	int shipsNumberFirst = players_[0]->getRemainedShipsNumber();
 	int shipsNumberSecond = players_[1]->getRemainedShipsNumber();
 	int k = 0;

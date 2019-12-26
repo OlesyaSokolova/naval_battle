@@ -6,7 +6,7 @@ inline int indexToArrayIndex(int & i)
 	return i - 1;
 }
 Player * createPlayer(std::string playerType);
-inline int nextPlayer(int playerIndex, shotResult result)
+inline int nextPlayer(int playerIndex, ShotResult result)
 {
 	bool res = result == missed ? 0 : 1;
 	int next = (playerIndex + (int)!res) % PLAYERS_NUMBER;

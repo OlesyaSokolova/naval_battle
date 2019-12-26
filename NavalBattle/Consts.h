@@ -28,7 +28,7 @@ const int POINT_PARAMETERS = 2;
 const int POINTS_NUMBER_ON_LINE = 8;
 
 enum PointCondition { blank = (int)' ', ship = (int)'x', enemyInjured = (int)'#', enemyMissed = (int)'o'};
-enum shotResult {unknown = (int)' ', missed = (int)'o', injured = (int)'x', killed};
+enum ShotResult {unknown = (int)' ', missed = (int)'o', injured = (int)'x', killed = (int)'x'};
 
 const std::string DELIMITER_1 = " ";
 const char DELIMITER_2 = '\n';
