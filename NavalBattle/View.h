@@ -10,7 +10,7 @@ public:
 	int chooseFirstPlayer();
 	Point playerTurn(int playerIndex);
 	void showPlayerField(const Player* player);
-	void updatePlayerField(const Player* player);
+	void initPlayerField(const Player* player);
 	void updateFields(int playerIndex, shotResult result);
 	std::vector<Point> readPosition();
 	void setAllUserShips();
@@ -20,7 +20,8 @@ public:
 private:
 	std::vector<Player*> players_;
 	int userIndex_;
-	std::unordered_map <shotResult, std::string, std::hash<int>> resultMessages;
+	std::unordered_map <shotResult, std::string, std::hash<int>> userResultMessages;
+	std::unordered_map <shotResult, std::string, std::hash<int>> enemyResultMessages;
 };
 
 class GraphicView : public View

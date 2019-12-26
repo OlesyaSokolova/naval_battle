@@ -14,9 +14,13 @@ void View::addPlayers(std::vector<Player*> players)
 }
 View::View()
 {
-	resultMessages.insert({missed, "You missed! Now your enemy wil shoot." });
-	resultMessages.insert({injured, "Cool! You injured your enemy's ship. Shoot again." });
-	resultMessages.insert({killed, "Great! You killed  your enemy's ship. Shoot again." });
+	userResultMessages.insert({missed, "You missed! Now your enemy will shoot." });
+	userResultMessages.insert({injured, "Cool! You injured your enemy's ship. Shoot again." });
+	userResultMessages.insert({killed, "Great! You killed  your enemy's ship. Shoot again." });
+
+	enemyResultMessages.insert({ missed, "Your enemy missed! Now you will shoot." });
+	enemyResultMessages.insert({ injured, "Your enemy injured your ship. Now he will shoot again." });
+	enemyResultMessages.insert({ killed, "Your enemy killed your ship. Now he will shoot again." });
 }
 void View::showPlayerField(const Player* player)
 {
@@ -69,7 +73,7 @@ void View::updatePlayerEnemyField(const Player* player)
 	this->showPlayerField(player);
 	this->showPlayerEnemyField(player);
 }
-void View::updatePlayerField(const Player* player)
+void View::initPlayerField(const Player* player)
 {
 	system("cls");
 	if (player->remainedShipsNumber_ < SHIPS_NUMBER)
@@ -119,72 +123,119 @@ void View::setAllUserShips()
 			}
 		}
 		player->setShip(position);
-		this->updatePlayerField(player);
+		this->initPlayerField(player);
 		player->initInfoPoins(position, &ship);
 		setShipsNumber++;
 	}
 	player->remainedShipsNumber_ = SHIPS_NUMBER;
 }
 void View::initPlayers()
-{
-	for (int i = 0; i < PLAYERS_NUMBER; i++)
+{	
+	if (userIndex_ != -1)
 	{
-		players_[i]->initMyField();
-		players_[i]->initEnemyField();
-		if (players_[i]->getPlayerType() == USER)
+		setAllUserShips();
+		system("cls");
+		this->showPlayerField(players_[userIndex_]);
+		this->showPlayerEnemyField(players_[userIndex_]);
+		int anotherPlayerIndex = (userIndex_ + INDEX_SHIFT) % PLAYERS_NUMBER;
+		players_[anotherPlayerIndex]->setAllShipsRandomly();
+		std::cout << "Player #" << anotherPlayerIndex << " is ready!" << std::endl;
+	}
+	else 
+		for (int i = 0; i < PLAYERS_NUMBER; i++)
 		{
-			setAllUserShips();
-			system("cls");
-			this->showPlayerField(players_[i]);
-			this->showPlayerEnemyField(players_[i]);
-		}
-		if (players_[i]->getPlayerType() == RANDOM && players_[(i+INDEX_SHIFT)%PLAYERS_NUMBER]->getPlayerType() == USER)
-		{
-			players_[i]->setAllShipsRandomly();
-			std::cout << "Player #" << i << " is ready!" << std::endl;
-		}
-		else if (players_[i]->getPlayerType() == OPTIMAL && players_[(i + INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() == USER)
-		{
-			players_[i]->setAllShipsRandomly();
-			std::cout << "Player #" << i << " is ready!" << std::endl;
-			getchar();
-		}
-		else
-		{
+			players_[i]->initMyField();
+			players_[i]->initEnemyField();
 			players_[i]->setAllShipsRandomly();
 			std::cout << "Player #" << i << " is ready!" << std::endl;
 			this->showPlayerField(players_[i]);
-			std::this_thread::sleep_for(std::chrono::microseconds(500000));
+			std::this_thread::sleep_for(std::chrono::microseconds(700000));
 		}
-	}	
-}
+}	
+
 int View::chooseFirstPlayer()
 {
 	std::cout << "Well ok now let's choose the player who will start: ";
 	int first = choosePlayer();
 	std::cout << players_[first]->getPlayerType() << std::endl;
+	std::this_thread::sleep_for(std::chrono::microseconds(500000));
 	return first; 
 }
 Point View::playerTurn(int playerIndex)
 {
 	Player* player = this->players_[playerIndex];
 	std::string type = player->getPlayerType();
-	return player->choosePoint();
+	Point p = player->choosePoint();
+	bool pointIsCorrect = false;
+	bool pointIsNew = false;
+	if (userIndex_ != -1)
+	{
+		if (userIndex_ == playerIndex)
+		{
+			pointIsCorrect = isAccessible(p);
+			if (pointIsCorrect == false)
+			{
+				pointIsNew = false;
+			}
+			else
+			{
+				pointIsNew = players_[userIndex_]->enemyField_[p.getI()][p.getJ()] == unknown ? true : false;
+			}
+			while(pointIsNew == false)
+			{	
+				pointIsCorrect = isAccessible(p);
+				if(pointIsCorrect == false )
+				{
+					pointIsNew = false;
+					std::cout << "This point is out of field ranges: " << p.getOriginalInput() << ". Please, try again." << std::endl;
+				}
+				else
+				{
+					std::cout << "You have already checked this point: " << p.getOriginalInput() << std::endl << "Please, try again." << std::endl;
+				}
+				p = player->choosePoint();
+				pointIsNew = players_[userIndex_]->enemyField_[p.getI()][p.getJ()] == unknown ? true : false;
+				bool pointIsCorrect = isAccessible(p);
+			}
+		}
+		else
+		{
+			std::cout << "Your enemy turn: " << p.getOriginalInput() << std::endl;
+			std::cout << "Please, press ENTER to continue.";
+			getchar();
+		}
+		
+	}
+	return p;
 }
 void View::updateFields(int playerIndex, shotResult result)
 {
 	if (this->players_[playerIndex]->getPlayerType() == USER)
 	{	
 		this->updatePlayerEnemyField(this->players_[playerIndex]);
-		std::cout << this->resultMessages[result] << std::endl;	
+		std::cout << this->userResultMessages[result] << std::endl;
+		//std::cout << "Please, press ENTER to continue.";
+		getchar();
 	}
 	else
 	{
-		system("cls");
-		std::cout << "first player" << ":" << std::endl;
-		this->showPlayerField(this->players_[0]);
-		std::cout << "second player" << ":" << std::endl;
-		this->showPlayerField(this->players_[1]);
+		if (userIndex_ != -1)
+		{		
+			if (playerIndex != userIndex_)
+			{
+				this->updatePlayerEnemyField(this->players_[userIndex_]);
+				std::cout << this->enemyResultMessages[result] << std::endl;
+			}		
+		}
+		else
+		{
+			system("cls");
+			std::cout << "first player" << ":" << std::endl;
+			this->showPlayerField(this->players_[0]);
+			std::cout << "second player" << ":" << std::endl;
+			this->showPlayerField(this->players_[1]);
+		}
+		
 	}
 }
 View * createView(std::string viewType)

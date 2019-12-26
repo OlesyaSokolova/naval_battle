@@ -11,10 +11,12 @@ public:
 	virtual void readPoint();
 	void getPoint(std::string);
 	virtual ~Point() = default;
+	std::string getOriginalInput() const;
 protected:
 	int i_;
 	int j_;
 	friend class ProxyRandom;
+	char i_j_[POINT_PARAMETERS + INDEX_SHIFT];
 };
 
 class InfoPoint : public Point

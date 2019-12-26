@@ -2,10 +2,10 @@
 #include <iostream>
 
 Point::Point()
-	:i_(0), j_(0) {}
+	:i_(0), j_(0), i_j_{'\0'} {}
 
 Point::Point(int i, int j)
-	: i_(i), j_(j) {}
+	: i_(i), j_(j), i_j_{(char)i+'0', (char)j+'a', '\0'} {}
 
 int Point::getI() const
 {
@@ -14,6 +14,14 @@ int Point::getI() const
 int Point::getJ() const
 {
 	return this->j_;
+}
+
+std::string Point::getOriginalInput() const
+{
+	char res[POINT_PARAMETERS + INDEX_SHIFT];
+	strcpy_s(res, i_j_);
+	std::string result = (std::string)res;
+	return result;
 }
 InfoPoint::InfoPoint(int i, int j, Ship* ship)
 	:Point(i, j), ship_(ship) {}
@@ -41,20 +49,19 @@ void Point::getPoint(std::string i_j)
 }
 void Point::readPoint()
 {
-	char i_j[POINT_PARAMETERS];
-
 	for (int k = 0; k < POINT_PARAMETERS; k++)
 	{
-		std::cin >> i_j[k];
-		if ('0' <= i_j[k] && i_j[k] <= '9')
+		std::cin >> i_j_[k];
+		if ('0' <= i_j_[k] && i_j_[k] <= '9')
 		{
-			this->i_ = i_j[k] - '0';
+			this->i_ = i_j_[k] - '0';
 		}
 		else
 		{
-			this->j_ = letterToIndex(i_j[k]);
+			this->j_ = letterToIndex(i_j_[k]);
 		}
 	}
+
 }
 shotResult InfoPoint::decreaseShipCounter() const
 {
