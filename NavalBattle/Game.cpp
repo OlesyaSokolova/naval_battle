@@ -38,7 +38,6 @@ int Game::round()
 	ShotResult result;
 	int shipsNumberFirst = players_[0]->getRemainedShipsNumber();
 	int shipsNumberSecond = players_[1]->getRemainedShipsNumber();
-	int k = 0;
 	while (shipsNumberFirst > 0 && shipsNumberSecond > 0)
 	{
 		Point p = view_->playerTurn(playerIndex);

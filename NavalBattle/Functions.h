@@ -26,3 +26,4 @@ inline char symbol(int j)
 int calcDif(int x, int y);
 std::vector<std::string> parsingString(std::string line, std::string delim);
 Point randomPointOnLine(int line);
+void shufflePoints(std::vector<Point>& vec);

@@ -78,3 +78,11 @@ Point randomPointOnLine(int line)
 	}
 	return Point(i, j);
 }
+void shufflePoints(std::vector<Point>& vec)
+{
+	srand(time(NULL));
+	for (int i = 0; i < vec.size(); i++)
+	{
+		std::swap(vec[i], vec[rand()%vec.size()]);
+	}
+}

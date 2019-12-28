@@ -98,8 +98,7 @@ ShotResult Player::askPoint(Point p)
 		{
 			res = infoPoints_[i].decreaseShipCounter();
 			int vectorSize = this->infoPoints_.size();
-			std::swap(this->infoPoints_[i], this->infoPoints_[vectorSize - 1]);
-			infoPoints_.pop_back();
+			infoPoints_.erase(infoPoints_.begin()+i);
 			return res;
 		}
 	}
@@ -145,6 +144,8 @@ PointCondition Player::checkPoint(Point p) const
 }
 void Player::setMyShotResult(Point p, ShotResult result)
 {
+	if (result == killed)
+		result = injured;
 	this->enemyField_[p.getI()][p.getJ()] = result;
 }
 void Player::setEnemyShotResult(Point p, ShotResult result)

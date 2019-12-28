@@ -14,7 +14,7 @@ public:
 	PointCondition checkPoint(Point p) const;
 	void initInfoPoins(const std::vector<Point>& position, Ship* ship);
 	virtual Point choosePoint() = 0;
-	void setMyShotResult(Point p, ShotResult result);
+	virtual void setMyShotResult(Point p, ShotResult result);
 	void setEnemyShotResult(Point p, ShotResult result);
 protected:
 	virtual std::vector <Point> generateRandomPosition(int shipSize);
@@ -49,7 +49,12 @@ public:
 	std::vector <Point>generateRandomPositionOptimally(int shipSize);
 	void setAllShipsRandomly() override;
 	Point choosePoint()override;
+	Point chooseRandomPoint();
 	std::vector<Point> successfulPoints;
 	std::vector<Point> pointsOnLines[DIRECTIONS_NUMBER];
 	std::vector<Point> pointsToUse;
+	Point randPointNearPoint(Point p);
+	void setMyShotResult(Point p, ShotResult result) override;
+	Point chooseRightPoint();
+	int dir_;
 };

@@ -2,10 +2,10 @@
 #include <iostream>
 
 Point::Point()
-	:i_(0), j_(0), i_j_{'\0'} {}
+	:i_(0), j_(0), i_j_{'\0'}, usedTimes_(0) {}
 
 Point::Point(int i, int j)
-	: i_(i), j_(j), i_j_{(char)i+'0', (char)j+'a', '\0'} {}
+	: i_(i), j_(j), i_j_{(char)i+'0', (char)j+'a', '\0'}, usedTimes_(0) {}
 
 int Point::getI() const
 {
@@ -72,4 +72,12 @@ ShotResult InfoPoint::decreaseShipCounter() const
 		return killed;
 	}
 	return injured;
+}
+int Point::getUsedTimes() const
+{
+	return this->usedTimes_;
+}
+void Point::increaseTimesToUse()
+{
+	this->usedTimes_++;
 }

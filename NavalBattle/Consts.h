@@ -28,7 +28,7 @@ const int POINT_PARAMETERS = 2;
 const int POINTS_NUMBER_ON_LINE = 8;
 
 enum PointCondition { blank = (int)' ', ship = (int)'x', enemyInjured = (int)'#', enemyMissed = (int)'o'};
-enum ShotResult {unknown = (int)' ', missed = (int)'o', injured = (int)'x', killed = (int)'x'};
+enum ShotResult {unknown = (int)' ', missed = (int)'o', injured = (int)'x', killed};
 
 const std::string DELIMITER_1 = " ";
 const char DELIMITER_2 = '\n';
@@ -51,7 +51,10 @@ const int MAX_INPUT_LINE_SIZE = 11;
 const int INDEX_SHIFT = 1;
 const int SHIP_SIZE_SHIFT = 1;
 const int K_VARIANTS_FOR_LINES = 2;
+const int POINT_AREA_SHIFTS = 3;
+const int TIMES_TO_USE_POINT_OPTIMALLY = 2;
 
+const int pointArea[POINT_AREA_SHIFTS] = { -1, 0, 1 };
 const int shipFirstDi[DIRECTIONS] = { -1, 1, 1, 1, 1, -1, -1, -1 };
 const int shipFirstDj[DIRECTIONS] = { 1, 1, 1, -1, -1, -1, -1, 1 };
 

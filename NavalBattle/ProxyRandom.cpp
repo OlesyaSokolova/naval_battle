@@ -31,9 +31,9 @@ Point ProxyRandom::generateRandomPoint()
 
 bool ProxyRandom::areaIsBlank(const Player* player, const Point& firstPoint, const Point& lastPoint)
 {
-	int areaRange_i_min = std::min(firstPoint.i_, lastPoint.i_);
+	int areaRange_i_min = std::max(0, std::min(firstPoint.i_, lastPoint.i_));
 	int areaRange_i_max = std::max(firstPoint.i_, lastPoint.i_);
-	int areaRange_j_min = std::min(firstPoint.j_, lastPoint.j_);
+	int areaRange_j_min = std::max(0, std::min(firstPoint.j_, lastPoint.j_));
 	int areaRange_j_max = std::max(firstPoint.j_, lastPoint.j_);
 	for (int i = areaRange_i_min; i <= areaRange_i_max && i < FIELD_SIZE; i++)
 	{
