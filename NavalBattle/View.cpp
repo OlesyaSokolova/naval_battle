@@ -158,6 +158,8 @@ int View::chooseFirstPlayer()
 	std::cout << "Well ok now let's choose the player who will start: ";
 	int first = choosePlayer();
 	std::cout << players_[first]->getPlayerType() << std::endl;
+	std::cout << "If you are ready, press ENTER";
+	getchar();
 	std::this_thread::sleep_for(std::chrono::microseconds(500000));
 	return first; 
 }
@@ -166,13 +168,13 @@ Point View::playerTurn(int playerIndex)
 	Player* player = this->players_[playerIndex];
 	std::string type = player->getPlayerType();
 	Point p = player->choosePoint();
-	bool pointIsCorrect = false;
+	bool pointIsCorrect;
 	bool pointIsNew = false;
 	if (userIndex_ != -1)
 	{
 		if (userIndex_ == playerIndex)
 		{
-			pointIsCorrect = isAccessible(p);
+			pointIsCorrect = isAccessibleForTurn(p);
 			if (pointIsCorrect == true)
 			{
 				pointIsNew = players_[userIndex_]->enemyField_[p.getI()][p.getJ()] == unknown ? true : false;
@@ -222,9 +224,9 @@ void View::updateFields(int playerIndex, ShotResult result)
 		else
 		{
 			system("cls");
-			std::cout << "first player" << ":" << std::endl;
+			std::cout << "first player " << "(" << this->players_[0]->getPlayerType() << ")" << ":" << std::endl;
 			this->showPlayerField(this->players_[0]);
-			std::cout << "second player" << ":" << std::endl;
+			std::cout << "second player " << "(" << this->players_[1]->getPlayerType() << ")" << ":" << std::endl;
 			this->showPlayerField(this->players_[1]);
 		}
 		

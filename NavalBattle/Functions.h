@@ -27,3 +27,6 @@ int calcDif(int x, int y);
 std::vector<std::string> parsingString(std::string line, std::string delim);
 Point randomPointOnLine(int line);
 void shufflePoints(std::vector<Point>& vec);
+int calcLastPoint(int dir, std::vector<Point> points);
+int KantorNumeration(int i, int j);
+bool isAccessibleForTurn(const Point& point);

@@ -21,6 +21,16 @@ bool isAccessible(const Point& point)
 	}
 	return false;
 }
+bool isAccessibleForTurn(const Point& point)
+{
+	int i = point.getI();
+	int j = point.getJ();
+	if ((i >= 0) && (i < FIELD_SIZE) && (j >= 0) && (j < FIELD_SIZE))
+	{
+		return true;
+	}
+	return false;
+}
 
 int calcDif(int x, int y)
 {
@@ -85,4 +95,71 @@ void shufflePoints(std::vector<Point>& vec)
 	{
 		std::swap(vec[i], vec[rand()%vec.size()]);
 	}
+}
+int calcLastPoint(int dir, std::vector<Point> points)
+{
+	if (dir == 0)
+	{
+		int minParam = FIELD_SIZE;
+		int result = 0;
+		for (int i = 0; i < points.size(); i++)
+		{
+			if (points[i].getI() < minParam)
+			{
+				minParam = points[i].getI();
+				result = i;
+			}
+		}
+		return result;
+	}
+	else if (dir == 1)
+	{
+		int maxParam = 0;
+		int result = 0;
+		for (int i = 0; i < points.size(); i++)
+		{
+			if (points[i].getJ() > maxParam)
+			{
+				maxParam = points[i].getJ();
+				result = i;
+			}
+		}
+		return result;
+	}
+	else if (dir == 2)
+	{
+		int maxParam = 0;
+		int result = 0;
+		for (int i = 0; i < points.size(); i++)
+		{
+			if (points[i].getI() > maxParam)
+			{
+				maxParam = points[i].getI();
+				result = i;
+			}
+		}
+		return result;
+	}
+	else if (dir == 3)
+	{
+		int minParam = FIELD_SIZE;
+		int result = 0;
+		for (int i = 0; i < points.size(); i++)
+		{
+			if (points[i].getJ() < minParam)
+			{
+				minParam = points[i].getJ();
+				result = i;
+			}
+		}
+		return result;
+	}
+}
+int KantorNumeration(int i, int j)
+{
+	int result;
+	int part1 = i + j;
+	int part2 = i + j + 1;
+	result = (part1*part2) / 2;
+	return result + i;
 }

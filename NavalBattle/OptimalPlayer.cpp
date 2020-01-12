@@ -25,16 +25,22 @@ OptimalPlayer::OptimalPlayer()
 	{
 		pointsOnLines[3].push_back(Point(i, 1));
 	}
+
+	for (int i = 0; i < DIRECTIONS_NUMBER; i++)
+	{
+		shufflePoints(pointsOnLines[i]);
+	}
+	srand(time(NULL));
+	this->dir_ = rand() % DIRECTIONS_NUMBER;
+	pointsToUse.resize(181);
 	for (int i = 0; i < FIELD_SIZE; i++)
 	{
 		for (int j = 0; j < FIELD_SIZE; j++)
 		{
-			this->pointsToUse.push_back(Point(i, j));
+			int index = KantorNumeration(i, j);
+
+			this->pointsToUse[index] = Point(i, j);
 		}
-	}
-	for (int i = 0; i < DIRECTIONS_NUMBER; i++)
-	{
-		shufflePoints(pointsOnLines[i]);
 	}
 }
 Point OptimalPlayer::chooseRandomPoint()
@@ -42,20 +48,57 @@ Point OptimalPlayer::chooseRandomPoint()
 	srand(time(NULL));
 	int vectorSize = this->pointsToUse.size();
 	int index = rand() % vectorSize;
-	Point point = this->pointsToUse[index];
-	pointsToUse.erase(pointsToUse.begin() + index);
+	Point point;
+	point = this->pointsToUse[index];
+	if (index != 0)
+	{
+		while (point.getI() == 0 && point.getJ() == 0)
+		{
+			index = rand() % vectorSize;
+			point = this->pointsToUse[index];
+		}
+	}
+	 
+	bool pointCanBeUsed = canBeUsed(point);
+	while (pointCanBeUsed == false || (point.getI() == 0 && point.getJ() == 0))
+	{
+		index = rand() % vectorSize;
+		point = this->pointsToUse[index];
+		pointCanBeUsed = canBeUsed(point);
+	}
 	return point;
 }
+bool OptimalPlayer::canBeUsed(Point p)
+{
+	int index = KantorNumeration(p.getI(), p.getJ());
+	if (this->pointsToUse[index].getUsedTimes() == 0)
+	{	
+			return true;
+	}
+	return false;
+}
+
 void OptimalPlayer::setMyShotResult(Point p, ShotResult result)
 {
 	if (result != missed)
-	{
-		this->successfulPoints.push_back(p);
-		result = injured;
+	{	
+		if (result == killed)
+		{
+			result = injured;
+			this->successfulPoints.clear();
+		}
+		else
+		{
+			this->successfulPoints.push_back(p);
+		}	
 	}
-	else if(this->successfulPoints.size() == 1)
+	else if (this->successfulPoints.size() == 1)
 	{
 		this->dir_ = (this->dir_ + INDEX_SHIFT) % DIRECTIONS_NUMBER;
+	}
+	else if(this->successfulPoints.size() > 1)
+	{
+		this->dir_ = (this->dir_ + INDEX_SHIFT + INDEX_SHIFT) % DIRECTIONS_NUMBER;
 	}
 	this->enemyField_[p.getI()][p.getJ()] = result;
 }
@@ -64,52 +107,59 @@ Point OptimalPlayer::chooseRightPoint()
 	Point p;
 	if (this->successfulPoints.size() == 1)
 	{
-		if (this->dir_ == -1)
-		{
-			return this->randPointNearPoint(successfulPoints[0]);
-		}
-		else
-		{
-			
-		}
-		
+		p = this->randPointNearPoint(successfulPoints[0]);
 	}
-	
+	else
+	{
+		bool pointIsCorrect = false;
+		bool pointCanBeUsed = false;
+		while (pointIsCorrect == false || pointCanBeUsed == false)
+		{
+			int lastPointIndex = calcLastPoint(this->dir_, this->successfulPoints);
+			int di = pointAreaDi[this->dir_];
+			int dj = pointAreaDj[this->dir_];
+			int i = di * INDEX_SHIFT + successfulPoints[lastPointIndex].getI();
+			int j = dj * INDEX_SHIFT + successfulPoints[lastPointIndex].getJ();
+			p = Point(i, j);
+			pointIsCorrect = isAccessibleForTurn(p);
+			pointCanBeUsed = canBeUsed(p);
+		}
+	}
 	return p;
 }
 Point OptimalPlayer::randPointNearPoint(Point p)
 {
 	srand(time(NULL));
-	int di = rand() % POINT_AREA_SHIFTS;
-	int dj = rand() % POINT_AREA_SHIFTS;
-	bool pointIsCorrect = false;
+	int di = pointAreaDi[this->dir_];
+	int dj = pointAreaDj[this->dir_];
 	Point res(p.getI() + di, p.getJ() + dj);
-	while (pointIsCorrect == false)
+	bool pointIsCorrect = isAccessible(res);
+	bool pointCanBeUsed = canBeUsed(res);
+	while (pointIsCorrect == false || pointCanBeUsed == false)
 	{
-		di = rand() % POINT_AREA_SHIFTS;
-		dj = rand() % POINT_AREA_SHIFTS;
+		this->dir_ = (this->dir_ + INDEX_SHIFT) % DIRECTIONS_NUMBER;
+		di = pointAreaDi[this->dir_];
+		dj = pointAreaDj[this->dir_];
 		res = Point(p.getI() + di, p.getJ() + dj);
-		pointIsCorrect = isAccessible(res);
+		pointIsCorrect = isAccessibleForTurn(res);
+		pointCanBeUsed = canBeUsed(res);
 	}
 	return res;
 }
 Point OptimalPlayer::choosePoint()
 {
-/*	Point p;
+	Point p;
 	if (successfulPoints.size() == 0)
 	{
-		return this->chooseRandomPoint();
+		p = this->chooseRandomPoint();
 	}
 	else
 	{
-		return this->chooseRightPoint();
-	}*/
-	srand(time(NULL));
-	int vectorSize = this->pointsToUse.size();
-	int index = rand() % vectorSize;
-	Point point = this->pointsToUse[index];
-	pointsToUse.erase(pointsToUse.begin() + index);
-	return point;
+		p = this->chooseRightPoint();
+	}
+	int index = KantorNumeration(p.getI(), p.getJ());
+	this->pointsToUse[index].increaseTimesToUse();
+	return p;
 }
 std::vector <Point>  OptimalPlayer::generateRandomPositionOptimally(int shipSize)
 {

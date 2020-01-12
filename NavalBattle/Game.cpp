@@ -42,6 +42,8 @@ int Game::round()
 	{
 		Point p = view_->playerTurn(playerIndex);
 		result = shoot(playerIndex, p);
+		std::cout << playerIndex << ": " << p.getOriginalInput() << std::endl;
+		//getchar();	
 		view_->updateFields(playerIndex, result);
 		playerIndex = nextPlayer(playerIndex, result);
 		shipsNumberFirst = players_[0]->getRemainedShipsNumber();

@@ -40,6 +40,7 @@ class RandomPlayer : public Player
 public:
 	RandomPlayer();
 	Point choosePoint() override;
+private:
 	std::vector<Point> pointsToUse;
 };
 class OptimalPlayer : public Player
@@ -48,13 +49,16 @@ public:
 	OptimalPlayer();
 	std::vector <Point>generateRandomPositionOptimally(int shipSize);
 	void setAllShipsRandomly() override;
-	Point choosePoint()override;
+	Point choosePoint()override;	
+	void setMyShotResult(Point p, ShotResult result) override;
+	
+private:
 	Point chooseRandomPoint();
+	Point randPointNearPoint(Point p);
+	Point chooseRightPoint();
+	bool canBeUsed(Point p);
+	int dir_;	
 	std::vector<Point> successfulPoints;
 	std::vector<Point> pointsOnLines[DIRECTIONS_NUMBER];
 	std::vector<Point> pointsToUse;
-	Point randPointNearPoint(Point p);
-	void setMyShotResult(Point p, ShotResult result) override;
-	Point chooseRightPoint();
-	int dir_;
 };
