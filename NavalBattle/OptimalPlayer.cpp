@@ -1,9 +1,9 @@
 #include "ProxyRandom.h"
 #include <iostream>
-#include <ctime>
+#include <time.h>
 
-OptimalPlayer::OptimalPlayer()
-	:Player()
+
+void OptimalPlayer::initPrivateFields()
 {
 	this->playerType_ = OPTIMAL;
 	for (int i = 1; i <= 8; i++)
@@ -30,48 +30,45 @@ OptimalPlayer::OptimalPlayer()
 	{
 		shufflePoints(pointsOnLines[i]);
 	}
-	srand(time(NULL));
-	this->dir_ = rand() % DIRECTIONS_NUMBER;
-	pointsToUse.resize(181);
 	for (int i = 0; i < FIELD_SIZE; i++)
 	{
 		for (int j = 0; j < FIELD_SIZE; j++)
 		{
-			int index = KantorNumeration(i, j);
-
-			this->pointsToUse[index] = Point(i, j);
+			this->pointsToUse[i][j] = Point(i, j);
 		}
 	}
 }
+OptimalPlayer::OptimalPlayer()
+	:Player()
+{	
+	this->initPrivateFields();
+}
 Point OptimalPlayer::chooseRandomPoint()
 {
-	srand(time(NULL));
-	int vectorSize = this->pointsToUse.size();
-	int index = rand() % vectorSize;
+	int i = rand() % FIELD_SIZE;
+	int j = rand() % FIELD_SIZE;
 	Point point;
-	point = this->pointsToUse[index];
-	if (index != 0)
-	{
-		while (point.getI() == 0 && point.getJ() == 0)
-		{
-			index = rand() % vectorSize;
-			point = this->pointsToUse[index];
-		}
-	}
-	 
+	point = this->pointsToUse[i][j];
 	bool pointCanBeUsed = canBeUsed(point);
-	while (pointCanBeUsed == false || (point.getI() == 0 && point.getJ() == 0))
+	int k = 0;
+	while (pointCanBeUsed == false)
 	{
-		index = rand() % vectorSize;
-		point = this->pointsToUse[index];
+		k++;
+		if (k == FIELD_SIZE - INDEX_SHIFT)
+		{
+			i = (i + INDEX_SHIFT) % FIELD_SIZE;
+			k = 0;
+		}
+		j = (j + INDEX_SHIFT) % FIELD_SIZE;
+		point = this->pointsToUse[i][j];
 		pointCanBeUsed = canBeUsed(point);
 	}
+	
 	return point;
 }
 bool OptimalPlayer::canBeUsed(Point p)
 {
-	int index = KantorNumeration(p.getI(), p.getJ());
-	if (this->pointsToUse[index].getUsedTimes() == 0)
+	if (this->pointsToUse[p.getI()][p.getJ()].getUsedTimes() == 0)
 	{	
 			return true;
 	}
@@ -113,6 +110,7 @@ Point OptimalPlayer::chooseRightPoint()
 	{
 		bool pointIsCorrect = false;
 		bool pointCanBeUsed = false;
+		std::cout << "2";
 		while (pointIsCorrect == false || pointCanBeUsed == false)
 		{
 			int lastPointIndex = calcLastPoint(this->dir_, this->successfulPoints);
@@ -123,6 +121,7 @@ Point OptimalPlayer::chooseRightPoint()
 			p = Point(i, j);
 			pointIsCorrect = isAccessibleForTurn(p);
 			pointCanBeUsed = canBeUsed(p);
+			this->dir_ = (this->dir_ + INDEX_SHIFT+ INDEX_SHIFT) % DIRECTIONS_NUMBER;
 		}
 	}
 	return p;
@@ -157,8 +156,9 @@ Point OptimalPlayer::choosePoint()
 	{
 		p = this->chooseRightPoint();
 	}
-	int index = KantorNumeration(p.getI(), p.getJ());
-	this->pointsToUse[index].increaseTimesToUse();
+	int i = p.getI();
+	int j = p.getJ();
+	this->pointsToUse[i][j].increaseTimesToUse();
 	return p;
 }
 std::vector <Point>  OptimalPlayer::generateRandomPositionOptimally(int shipSize)

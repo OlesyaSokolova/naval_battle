@@ -5,7 +5,6 @@ Player::Player()
 	initEnemyField();
 	initMyShips();
 	this->remainedShipsNumber_ = 0;
-
 }
 void Player::initMyShips()
 {//map с типами кораблей и их количествами

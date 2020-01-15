@@ -57,8 +57,9 @@ private:
 	Point randPointNearPoint(Point p);
 	Point chooseRightPoint();
 	bool canBeUsed(Point p);
-	int dir_;	
+	void initPrivateFields();
 	std::vector<Point> successfulPoints;
 	std::vector<Point> pointsOnLines[DIRECTIONS_NUMBER];
-	std::vector<Point> pointsToUse;
+	Point pointsToUse[FIELD_SIZE][FIELD_SIZE];
+	int dir_;
 };

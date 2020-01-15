@@ -19,7 +19,6 @@ ProxyRandom::ProxyRandom(int shipSize)
 
 Point ProxyRandom::generateRandomPoint()
 {
-	srand(time(NULL));
 	int vectorSize = this->pointsToUse.size();
 	int index = rand() % vectorSize;
 	Point point = this->pointsToUse[index];
@@ -92,7 +91,6 @@ bool ProxyRandom::fixLastPoint(const Player* player, const Point& firstPoint, Po
 }
 Point ProxyRandom::generateLastPoint(const Point& firstPoint, int shipSize)
 {
-	srand(time(NULL));
 	int direction = rand() % DIRECTIONS;
 	int li = firstPoint.i_ + this->di[direction];
 	int lj = firstPoint.j_ + this->dj[direction];
@@ -102,7 +100,6 @@ Point ProxyRandom::generateLastPoint(const Point& firstPoint, int shipSize)
 }
 Point ProxyRandom::generateLastPoint(const Point& firstPoint, int shipSize, int line)
 {
-	srand(time(NULL));
 	int direction = kForLines[line][rand() % K_VARIANTS_FOR_LINES];
 	int li = firstPoint.i_ + this->di[direction];
 	int lj = firstPoint.j_ + this->dj[direction];

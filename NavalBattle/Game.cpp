@@ -32,6 +32,7 @@ ShotResult Game::shoot(int playerIndex, Point p)
 }
 int Game::round()
 {
+	srand(time(NULL));
 	this->view_->initPlayers();
 	int firstPlayer = this->view_->chooseFirstPlayer();
 	int playerIndex = firstPlayer;
@@ -42,7 +43,7 @@ int Game::round()
 	{
 		Point p = view_->playerTurn(playerIndex);
 		result = shoot(playerIndex, p);
-		std::cout << playerIndex << ": " << p.getOriginalInput() << std::endl;
+		std::cout << players_[playerIndex]->getPlayerType() << ": " << p.getOriginalInput() << std::endl;
 		//getchar();	
 		view_->updateFields(playerIndex, result);
 		playerIndex = nextPlayer(playerIndex, result);

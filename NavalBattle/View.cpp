@@ -149,7 +149,6 @@ void View::initPlayers()
 			players_[i]->setAllShipsRandomly();
 			std::cout << "Player #" << i << " is ready!" << std::endl;
 			this->showPlayerField(players_[i]);
-			std::this_thread::sleep_for(std::chrono::microseconds(700000));
 		}
 }	
 
@@ -208,6 +207,7 @@ Point View::playerTurn(int playerIndex)
 }
 void View::updateFields(int playerIndex, ShotResult result)
 {
+	std::this_thread::sleep_for(std::chrono::microseconds(700000));
 	if (this->players_[playerIndex]->getPlayerType() == USER)
 	{	
 		this->updatePlayerEnemyField(this->players_[playerIndex]);

@@ -14,12 +14,10 @@ RandomPlayer::RandomPlayer()
 
 Point RandomPlayer::choosePoint()
 {
-	srand(time(NULL));
 	int vectorSize = this->pointsToUse.size();
 	int index = rand() % vectorSize;
 	Point point = this->pointsToUse[index];
-	std::swap(this->pointsToUse[index], this->pointsToUse[vectorSize - 1]);
-	this->pointsToUse.pop_back();
+	this->pointsToUse.erase(pointsToUse.begin()+index);
 	return point;
 }
 

@@ -64,7 +64,6 @@ std::vector<std::string> parsingString(std::string line, std::string delim)
 }
 Point randomPointOnLine(int line)
 {
-	srand(time(NULL));
 	int i = 1, j = 1;
 	if (line == 0)
 	{
@@ -90,7 +89,6 @@ Point randomPointOnLine(int line)
 }
 void shufflePoints(std::vector<Point>& vec)
 {
-	srand(time(NULL));
 	for (int i = 0; i < vec.size(); i++)
 	{
 		std::swap(vec[i], vec[rand()%vec.size()]);
@@ -154,12 +152,4 @@ int calcLastPoint(int dir, std::vector<Point> points)
 		}
 		return result;
 	}
-}
-int KantorNumeration(int i, int j)
-{
-	int result;
-	int part1 = i + j;
-	int part2 = i + j + 1;
-	result = (part1*part2) / 2;
-	return result + i;
 }
