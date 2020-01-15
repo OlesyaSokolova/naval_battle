@@ -1,13 +1,23 @@
 #include "ProxyRandom.h"
-Player::Player()
+void Player::initPrivateData()
 {
 	initMyField();
 	initEnemyField();
 	initMyShips();
 	this->remainedShipsNumber_ = 0;
+	infoPoints_.clear();
+	playerType_ = EMPTY_STRING;
+}
+Player::Player()
+{
+	this->initPrivateData();
 }
 void Player::initMyShips()
 {//map с типами кораблей и их количествами
+	if (myShips_.size() != 0)
+	{
+		myShips_.clear();
+	}
 	for (int i = 0; i < BATTLESHIPS_NUMBER; i++)
 	{
 		Ship ship(BATTLESHIP_SIZE);

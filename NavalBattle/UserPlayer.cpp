@@ -1,10 +1,19 @@
 #include "Functions.h"
 #include <iostream>
 
+void UserPlayer::initPrivateData()
+{
+	initMyField();
+	initEnemyField();
+	initMyShips();
+	infoPoints_.clear();
+	this->remainedShipsNumber_ = 0;
+	this->playerType_ = USER;
+}
 UserPlayer::UserPlayer()
 	: Player()
 {
-	this->playerType_ = USER;
+	this->initPrivateData();
 }
 
 Point UserPlayer::choosePoint()

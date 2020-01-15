@@ -3,8 +3,19 @@
 #include <time.h>
 
 
-void OptimalPlayer::initPrivateFields()
+void OptimalPlayer::initPrivateData()
 {
+	initMyField();
+	initEnemyField();
+	initMyShips();
+	this->remainedShipsNumber_ = 0;
+	infoPoints_.clear();
+	successfulPoints.clear();
+	for(int i = 0; i < DIRECTIONS_NUMBER; i++)
+	{
+		pointsOnLines[i].clear();
+	}
+	
 	this->playerType_ = OPTIMAL;
 	for (int i = 1; i <= 8; i++)
 	{
@@ -41,7 +52,7 @@ void OptimalPlayer::initPrivateFields()
 OptimalPlayer::OptimalPlayer()
 	:Player()
 {	
-	this->initPrivateFields();
+	this->initPrivateData();
 }
 Point OptimalPlayer::chooseRandomPoint()
 {
@@ -111,8 +122,15 @@ Point OptimalPlayer::chooseRightPoint()
 		bool pointIsCorrect = false;
 		bool pointCanBeUsed = false;
 		std::cout << "2";
+		int k = 0; 
 		while (pointIsCorrect == false || pointCanBeUsed == false)
 		{
+			k++;
+			if (k == 3)
+			{
+				k = 90;
+				getchar();
+			}
 			int lastPointIndex = calcLastPoint(this->dir_, this->successfulPoints);
 			int di = pointAreaDi[this->dir_];
 			int dj = pointAreaDj[this->dir_];

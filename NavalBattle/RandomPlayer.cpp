@@ -1,8 +1,13 @@
 #include "Functions.h"
-RandomPlayer::RandomPlayer()
-	:Player()
+void RandomPlayer::initPrivateData()
 {
+	initMyField();
+	initEnemyField();
+	initMyShips();
+	this->remainedShipsNumber_ = 0;
+	infoPoints_.clear();
 	this->playerType_ = RANDOM;
+	pointsToUse.clear();
 	for (int i = 0; i < FIELD_SIZE; i++)
 	{
 		for (int j = 0; j < FIELD_SIZE; j++)
@@ -10,6 +15,11 @@ RandomPlayer::RandomPlayer()
 			this->pointsToUse.push_back(Point(i, j));
 		}
 	}
+}
+RandomPlayer::RandomPlayer()
+	:Player()
+{
+	this->initPrivateData();
 }
 
 Point RandomPlayer::choosePoint()

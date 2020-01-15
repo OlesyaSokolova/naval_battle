@@ -16,10 +16,19 @@ void Game::start()
 	int winnerIndex = 0;
 	for (int i = 0; i < this->roundsNumber_; i++)
 	{
+		if (i > 0)
+		{
+			system("cls");
+			for (int i = 0; i < PLAYERS_NUMBER; i++)
+			{
+				players_[i]->initPrivateData();
+			}
+		}
 		winnerIndex = this->round();
 		this->statistic_[winnerIndex]++;
 	}
 	std::cout << "Winner: " << winnerIndex << " (" << this->players_[winnerIndex]->getPlayerType() << ")" << std::endl;
+	std::cout << "Please press any key to quit." << std::endl;
 	getchar();
 }
 ShotResult Game::shoot(int playerIndex, Point p)

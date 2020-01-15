@@ -16,6 +16,7 @@ public:
 	virtual Point choosePoint() = 0;
 	virtual void setMyShotResult(Point p, ShotResult result);
 	void setEnemyShotResult(Point p, ShotResult result);
+	virtual void initPrivateData();
 protected:
 	virtual std::vector <Point> generateRandomPosition(int shipSize);
 	virtual void setShip(std::vector <Point>& position);
@@ -34,12 +35,14 @@ class UserPlayer : public Player
 public:
 	UserPlayer();
 	Point choosePoint() override;
+	void initPrivateData() override;
 };
 class RandomPlayer : public Player
 {
 public:
 	RandomPlayer();
 	Point choosePoint() override;
+	void initPrivateData() override;
 private:
 	std::vector<Point> pointsToUse;
 };
@@ -51,13 +54,12 @@ public:
 	void setAllShipsRandomly() override;
 	Point choosePoint()override;	
 	void setMyShotResult(Point p, ShotResult result) override;
-	
+	void initPrivateData() override;
 private:
 	Point chooseRandomPoint();
 	Point randPointNearPoint(Point p);
 	Point chooseRightPoint();
 	bool canBeUsed(Point p);
-	void initPrivateFields();
 	std::vector<Point> successfulPoints;
 	std::vector<Point> pointsOnLines[DIRECTIONS_NUMBER];
 	Point pointsToUse[FIELD_SIZE][FIELD_SIZE];

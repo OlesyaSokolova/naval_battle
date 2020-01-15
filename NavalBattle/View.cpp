@@ -154,12 +154,13 @@ void View::initPlayers()
 
 int View::chooseFirstPlayer()
 {
+	std::this_thread::sleep_for(std::chrono::microseconds(500000));
 	std::cout << "Well ok now let's choose the player who will start: ";
 	int first = choosePlayer();
+	std::this_thread::sleep_for(std::chrono::microseconds(500000));
 	std::cout << players_[first]->getPlayerType() << std::endl;
 	std::cout << "If you are ready, press ENTER";
 	getchar();
-	std::this_thread::sleep_for(std::chrono::microseconds(500000));
 	return first; 
 }
 Point View::playerTurn(int playerIndex)
@@ -207,7 +208,7 @@ Point View::playerTurn(int playerIndex)
 }
 void View::updateFields(int playerIndex, ShotResult result)
 {
-	std::this_thread::sleep_for(std::chrono::microseconds(700000));
+	//std::this_thread::sleep_for(std::chrono::microseconds(700000));
 	if (this->players_[playerIndex]->getPlayerType() == USER)
 	{	
 		this->updatePlayerEnemyField(this->players_[playerIndex]);
