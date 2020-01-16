@@ -121,7 +121,6 @@ Point OptimalPlayer::chooseRightPoint()
 	{
 		bool pointIsCorrect = false;
 		bool pointCanBeUsed = false;
-		std::cout << "2";
 		int k = 0; 
 		while (pointIsCorrect == false || pointCanBeUsed == false)
 		{

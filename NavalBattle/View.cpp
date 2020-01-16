@@ -2,10 +2,11 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include <algorithm>
+#include <stdio.h>
+#include <Windows.h>
 void View::addPlayers(std::vector<Player*> players)
 {
-	this->userIndex_ = -1;
+	this->userIndex_ = USER_DOESNT_PARTICIPATE;
 	for (int i = 0; i < PLAYERS_NUMBER; i++)
 	{
 		if (players[i]->getPlayerType() == USER)
@@ -100,6 +101,7 @@ void View::showFieldsWithUser()
 		std::cout << std::endl;
 		lineNumber++;
 	}
+	std::cout << std::endl;
 }
 void View::showFields()
 {
@@ -133,6 +135,7 @@ void View::showFields()
 		std::cout << std::endl;
 		lineNumber++;
 	}
+	std::cout << std::endl;
 }
 
 void View::initPlayerField(const Player* player)
@@ -164,11 +167,11 @@ void View::setAllUserShips()
 			continue;
 		}
 
-		if (position.size() == 1)
+		if (position.size() == POINT_PARAMETERS-INDEX_SHIFT)
 		{
-			int i_ = position[0].getI();
-			int j_ = position[0].getJ();
-			if (i_ == -1 && j_ == -1)
+			int i_ = position[FIRST].getI();
+			int j_ = position[FIRST].getJ();
+			if (i_ == MIN_I - INDEX_SHIFT && j_ == MIN_J - INDEX_SHIFT)
 			{
 				std::cout << "Ok! Your ships will be set randomly.Just type ENTER." << std::endl;
 				player->setAllShipsRandomly();
@@ -194,7 +197,12 @@ void View::setAllUserShips()
 }
 void View::initPlayers()
 {	
-	if (userIndex_ != -1)
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	system("color 17");
+	std::cout << " Hello! Let's play. If you are ready, please, press ENTER." << std::endl;
+	getchar();
+	system("cls");
+	if (userIndex_ != USER_DOESNT_PARTICIPATE)
 	{
 		setAllUserShips();
 		system("cls");
@@ -217,11 +225,10 @@ void View::initPlayers()
 
 int View::chooseFirstPlayer()
 {
-	std::this_thread::sleep_for(std::chrono::microseconds(500000));
 	std::cout << "Well ok now let's choose the player who will start: ";
 	int first = choosePlayer();
-	std::this_thread::sleep_for(std::chrono::microseconds(500000));
-	std::cout << players_[first]->getPlayerType() << std::endl;
+	std::this_thread::sleep_for(std::chrono::microseconds(1000000));
+	std::cout << indexToString(first) << std::endl;
 	std::cout << "If you are ready, press ENTER";
 	getchar();
 	return first; 
@@ -233,7 +240,7 @@ Point View::playerTurn(int playerIndex)
 	Point p = player->choosePoint();
 	bool pointIsCorrect;
 	bool pointIsNew = false;
-	if (userIndex_ != -1)
+	if (userIndex_ != USER_DOESNT_PARTICIPATE)
 	{
 		if (userIndex_ == playerIndex)
 		{
@@ -280,7 +287,7 @@ void View::updateFields(int playerIndex, ShotResult result)
 	}
 	else
 	{
-		if (userIndex_ != -1)
+		if (userIndex_ != USER_DOESNT_PARTICIPATE)
 		{		
 			showFieldsWithUser();
 			std::cout << this->enemyResultMessages[result] << std::endl;	
@@ -305,7 +312,7 @@ std::vector<Point> View::readPosition()
 	std::string line;
 	getline(std::cin, line, DELIMITER_2);
 	int lineSize = line.size();
-	if (line.size() == 1 && (line[0] == 'r' || line[0] == 'R'))
+	if (line.size() == 1 && (line[FIRST] == 'r' || line[FIRST] == 'R'))
 	{
 		position.push_back(Point(-1, -1));
 		return position;
@@ -320,7 +327,7 @@ std::vector<Point> View::readPosition()
 	for (int i = 0; i < points.size(); i++)
 	{
 		Point p;
-		if (points[i].size() > 2)
+		if (points[i].size() > POINT_PARAMETERS)
 		{
 			std::cout << "Wrong input point: " << points[i] << ". Please, Try again." << std::endl;
 			return position;
@@ -336,24 +343,28 @@ std::vector<Point> View::readPosition()
 }
 void View::showWinner(int winnerIndex)
 {
-	std::cout << "Winner: " << winnerIndex << " (" << this->players_[winnerIndex]->getPlayerType() << ")" << std::endl;
+	std::cout << "Winner: " << indexToString(winnerIndex) << std::endl;
+	if (userIndex_ != USER_DOESNT_PARTICIPATE)
+	{
+		std::cout << "Congratulations! ;-)" << std::endl;
+	}
 	std::cout << "Please press ENTER to continue." << std::endl;
 	getchar();
 }
 void View::showStatistic(int statistic[PLAYERS_NUMBER])
 {
 	std::cout << "Second player " <<
-		" (" << this->players_[FIRST]->getPlayerType() << ")" <<
-		"won " << statistic[FIRST] <<
+		"(" << this->players_[FIRST]->getPlayerType() << ")" <<
+		" won " << statistic[FIRST] <<
 		" times;" << std::endl;
 
 	std::cout << "Second player " <<
-		" (" << this->players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() << ")" <<
-		"won " << statistic[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER] << 
+		"(" << this->players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() << ")" <<
+		" won " << statistic[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER] << 
 		 " times;" << std::endl;
 
-	int winnerIndex = std::max(statistic[FIRST], statistic[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]);
-	std::cout << "Final winner: " << winnerIndex << " (" << this->players_[winnerIndex]->getPlayerType() << ")" << std::endl;
+	int winnerIndex = statistic[FIRST] > statistic[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER] ? statistic[FIRST] : statistic[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER];
+	std::cout << "Final winner: " << indexToString(winnerIndex) << " (" << this->players_[winnerIndex]->getPlayerType() << ")" << std::endl;
 	std::cout << "Please press ENTER to quit." << std::endl;
 	getchar();
 }

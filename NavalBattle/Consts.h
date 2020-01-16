@@ -29,7 +29,7 @@ const int POINT_PARAMETERS = 2;
 const int POINTS_NUMBER_ON_LINE = 8;
 
 enum PointCondition { blank = (int)' ', ship = (int)'x', enemyInjured = (int)'#', enemyMissed = (int)'o'};
-enum ShotResult {unknown = (int)' ', missed = (int)'o', injured = (int)'x', killed};
+enum ShotResult {unknown = (int)' ', missed = (int)'o', injured = (int)'#', killed};
 
 const std::string DELIMITER_1 = " ";
 const char DELIMITER_2 = '\n';
@@ -71,7 +71,7 @@ const int END_GAME_SHIPS_NUMBER = 0;
 const int FIRST_DIRECTION = 0;
 const int MIN_I = 0;
 const int MIN_J = 0;
-
+const int USER_DOESNT_PARTICIPATE = -1;
 const int pointAreaDi[DIRECTIONS_NUMBER] = { -1, 0, 1, 0 };
 const int pointAreaDj[DIRECTIONS_NUMBER] = { 0, 1, 0, -1 };
 const int shipFirstDi[DIRECTIONS] = { -1, 1, 1, 1, 1, -1, -1, -1 };
@@ -86,3 +86,11 @@ const int kForLines[DIRECTIONS_NUMBER][K_VARIANTS_FOR_LINES] = { 0, 5,
 };
 const int RESULT_VARIANTS = 4;
 const int FIRST = 0;
+const enum ConsoleColor {
+	Black = 0,
+	Blue = 1,
+	Red = 4,
+	DarkGray = 8,
+	LightBlue = 9,
+	White = 15
+};

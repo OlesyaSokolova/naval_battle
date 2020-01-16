@@ -29,3 +29,14 @@ Point randomPointOnLine(int line);
 void shufflePoints(std::vector<Point>& vec);
 int calcLastPoint(int dir, std::vector<Point> points);
 bool isAccessibleForTurn(const Point& point);
+inline std::string indexToString(int i)
+{
+	if (i == FIRST)
+	{
+		return "first player";
+	}
+	else
+	{
+		return "second player";
+	}
+}

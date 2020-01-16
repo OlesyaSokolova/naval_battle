@@ -1,5 +1,7 @@
 #include "Game.h"
 #include <iostream>
+#include <chrono>
+#include <thread>
 Game::Game(std::vector<std::string> playerTypes, std::string viewType, int roundsNumber = 1)
 	:roundsNumber_(roundsNumber), statistic_{ 0 }
 {
@@ -22,7 +24,7 @@ void Game::start()
 			players_[i]->initPrivateData();
 		}
 		winnerIndex = this->round();
-		if (roundsNumber_ != -1)
+		if (roundsNumber_ > 1)
 		{
 			this->view_->showWinner(winnerIndex);
 		}
@@ -46,18 +48,22 @@ int Game::round()
 	int firstPlayer = this->view_->chooseFirstPlayer();
 	int playerIndex = firstPlayer;
 	ShotResult result;
-	int shipsNumberFirst = players_[0]->getRemainedShipsNumber();
-	int shipsNumberSecond = players_[1]->getRemainedShipsNumber();
+	int shipsNumberFirst = players_[FIRST]->getRemainedShipsNumber();
+	int shipsNumberSecond = players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getRemainedShipsNumber();
 	while (shipsNumberFirst > 0 && shipsNumberSecond > 0)
 	{
 		Point p = view_->playerTurn(playerIndex);
 		result = shoot(playerIndex, p);
-		std::cout << players_[playerIndex]->getPlayerType() << ": " << p.getOriginalInput() << std::endl;
-		//getchar();	
+		if (players_[FIRST]->getPlayerType() != USER && players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() != USER)
+		{
+			std::cout << indexToString(playerIndex) << ": " << p.getOriginalInput() << std::endl;	
+			std::this_thread::sleep_for(std::chrono::microseconds(2500000));
+		}
+		
 		view_->updateFields(playerIndex, result);
 		playerIndex = nextPlayer(playerIndex, result);
-		shipsNumberFirst = players_[0]->getRemainedShipsNumber();
-		shipsNumberSecond = players_[1]->getRemainedShipsNumber();
+		shipsNumberFirst = players_[FIRST]->getRemainedShipsNumber();
+		shipsNumberSecond = players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getRemainedShipsNumber();
 	}
 	return playerIndex;
 }
