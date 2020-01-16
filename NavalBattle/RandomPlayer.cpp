@@ -4,7 +4,7 @@ void RandomPlayer::initPrivateData()
 	initMyField();
 	initEnemyField();
 	initMyShips();
-	this->remainedShipsNumber_ = 0;
+	this->remainedShipsNumber_ = END_GAME_SHIPS_NUMBER;
 	infoPoints_.clear();
 	this->playerType_ = RANDOM;
 	pointsToUse.clear();

@@ -13,7 +13,7 @@ Player::Player()
 	this->initPrivateData();
 }
 void Player::initMyShips()
-{//map с типами кораблей и их количествами
+{
 	if (myShips_.size() != 0)
 	{
 		myShips_.clear();

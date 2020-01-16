@@ -8,7 +8,7 @@ void OptimalPlayer::initPrivateData()
 	initMyField();
 	initEnemyField();
 	initMyShips();
-	this->remainedShipsNumber_ = 0;
+	this->remainedShipsNumber_ = END_GAME_SHIPS_NUMBER;
 	infoPoints_.clear();
 	successfulPoints.clear();
 	for(int i = 0; i < DIRECTIONS_NUMBER; i++)

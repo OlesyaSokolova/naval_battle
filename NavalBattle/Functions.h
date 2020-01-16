@@ -20,7 +20,7 @@ inline int choosePlayer()
 bool isAccessible(const Point& point);
 inline char symbol(int j)
 {
-	char c = (char)j + 'a';
+	char c = (char)j + ADDENDUM_FOR_LETTER_LOWERCASE;
 	return c;
 }
 int calcDif(int x, int y);

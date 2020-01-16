@@ -4,9 +4,9 @@
 
 ProxyRandom::ProxyRandom(int shipSize)
 	: dif_(shipSize + SHIP_SIZE_SHIFT),
-	di{ -2, 2, dif_, dif_, 2, -2, -dif_, -dif_ },
-	dj{ dif_, dif_, 2, -2, -dif_, -dif_, -2, +2 },
-	direction_(0)
+	di{ -INDEX_SHIFT_2, INDEX_SHIFT_2, dif_, dif_, INDEX_SHIFT_2, -INDEX_SHIFT_2, -dif_, -dif_ },
+	dj{ dif_, dif_, INDEX_SHIFT_2, -INDEX_SHIFT_2, -dif_, -dif_, -INDEX_SHIFT_2, +INDEX_SHIFT_2 },
+	direction_(FIRST_DIRECTION)
 {
 	for (int i = 0; i < FIELD_SIZE; i++)
 	{
@@ -30,9 +30,9 @@ Point ProxyRandom::generateRandomPoint()
 
 bool ProxyRandom::areaIsBlank(const Player* player, const Point& firstPoint, const Point& lastPoint)
 {
-	int areaRange_i_min = std::max(0, std::min(firstPoint.i_, lastPoint.i_));
+	int areaRange_i_min = std::max(MIN_I, std::min(firstPoint.i_, lastPoint.i_));
 	int areaRange_i_max = std::max(firstPoint.i_, lastPoint.i_);
-	int areaRange_j_min = std::max(0, std::min(firstPoint.j_, lastPoint.j_));
+	int areaRange_j_min = std::max(MIN_J, std::min(firstPoint.j_, lastPoint.j_));
 	int areaRange_j_max = std::max(firstPoint.j_, lastPoint.j_);
 	for (int i = areaRange_i_min; i <= areaRange_i_max && i < FIELD_SIZE; i++)
 	{
@@ -129,7 +129,7 @@ std::vector<Point> ProxyRandom::getPosition(const Point& firstPoint, const Point
 		j = dif_j * k + pf.j_;
 		result.push_back(Point(i, j));
 	}
-	if (shipSize != 1)
+	if (shipSize != TORPEDO_BOAT_SIZE)
 		result.push_back(pl);
 	return result;
 }

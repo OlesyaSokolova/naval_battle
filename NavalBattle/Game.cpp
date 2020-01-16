@@ -8,7 +8,7 @@ Game::Game(std::vector<std::string> playerTypes, std::string viewType, int round
 		Player* player = createPlayer(playerTypes[i]);
 		this->players_.push_back(player);
 	}
-	this->view_ = createView(viewType);
+	this->view_ = new View;
 	this->view_->addPlayers(this->players_);
 }
 void Game::start()
@@ -16,20 +16,20 @@ void Game::start()
 	int winnerIndex = 0;
 	for (int i = 0; i < this->roundsNumber_; i++)
 	{
-		if (i > 0)
+		system("cls");
+		for (int i = 0; i < PLAYERS_NUMBER; i++)
 		{
-			system("cls");
-			for (int i = 0; i < PLAYERS_NUMBER; i++)
-			{
-				players_[i]->initPrivateData();
-			}
+			players_[i]->initPrivateData();
 		}
 		winnerIndex = this->round();
+		if (roundsNumber_ != -1)
+		{
+			this->view_->showWinner(winnerIndex);
+		}
+		
 		this->statistic_[winnerIndex]++;
 	}
-	std::cout << "Winner: " << winnerIndex << " (" << this->players_[winnerIndex]->getPlayerType() << ")" << std::endl;
-	std::cout << "Please press any key to quit." << std::endl;
-	getchar();
+	this->view_->showStatistic(this->statistic_);
 }
 ShotResult Game::shoot(int playerIndex, Point p)
 {

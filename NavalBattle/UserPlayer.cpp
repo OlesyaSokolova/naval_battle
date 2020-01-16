@@ -7,7 +7,7 @@ void UserPlayer::initPrivateData()
 	initEnemyField();
 	initMyShips();
 	infoPoints_.clear();
-	this->remainedShipsNumber_ = 0;
+	this->remainedShipsNumber_ = END_GAME_SHIPS_NUMBER;
 	this->playerType_ = USER;
 }
 UserPlayer::UserPlayer()
