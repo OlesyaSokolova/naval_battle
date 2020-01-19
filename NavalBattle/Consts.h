@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <algorithm>
 
+
 const int NUMBER_OF_ARGUMENTS = 6;
 const int FIRST_ARGUMENT_NUMBER = 1;
 const std::string ROUNDS_NUMBER_KEY_SHORT = "-c";
@@ -73,7 +74,7 @@ const std::string CONSOLE_VIEW = "console";
 
 const std::string EMPTY_STRING = "";
 const char END_STRING = '\0';
-
+const char END_LINE = '\n';
 const char ADDENDUM_FOR_NUMBER = '0';
 const char ADDENDUM_FOR_LETTER_UPPERCASE = 'A';
 const char ADDENDUM_FOR_LETTER_LOWERCASE = 'a';
@@ -97,6 +98,9 @@ const int FIRST_DIRECTION = 0;
 const int MIN_I = 0;
 const int MIN_J = 0;
 const int USER_DOESNT_PARTICIPATE = -1;
+const int FIRST_ROUND = 0;
+const int UNKNOWN_WINNER = 0;
+const int ONE_ROUND = 1;
 const int pointAreaDi[DIRECTIONS_NUMBER] = { -1, 0, 1, 0 };
 const int pointAreaDj[DIRECTIONS_NUMBER] = { 0, 1, 0, -1 };
 const int shipFirstDi[DIRECTIONS] = { -1, 1, 1, 1, 1, -1, -1, -1 };

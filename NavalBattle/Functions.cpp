@@ -1,5 +1,7 @@
 #include "Functions.h"
 #include <iostream>
+
+
 Player * createPlayer(std::string playerType)
 {
 	if (playerType == RANDOM)
@@ -94,66 +96,73 @@ void shufflePoints(std::vector<Point>& vec)
 		std::swap(vec[i], vec[rand()%vec.size()]);
 	}
 }
-int calcLastPoint(int dir, std::vector<Point> points)
+int zeroDirection_calcLastPoint(std::vector<Point> points)
 {
-	if (dir == 0)
+	int minParam = FIELD_SIZE;
+	int result = 0;
+	for (int i = 0; i < points.size(); i++)
 	{
-		int minParam = FIELD_SIZE;
-		int result = 0;
-		for (int i = 0; i < points.size(); i++)
+		if (points[i].getI() < minParam)
 		{
-			if (points[i].getI() < minParam)
-			{
-				minParam = points[i].getI();
-				result = i;
-			}
+			minParam = points[i].getI();
+			result = i;
 		}
-		return result;
 	}
-	else if (dir == 1)
-	{
-		int maxParam = 0;
-		int result = 0;
-		for (int i = 0; i < points.size(); i++)
-		{
-			if (points[i].getJ() > maxParam)
-			{
-				maxParam = points[i].getJ();
-				result = i;
-			}
-		}
-		return result;
-	}
-	else if (dir == 2)
-	{
-		int maxParam = 0;
-		int result = 0;
-		for (int i = 0; i < points.size(); i++)
-		{
-			if (points[i].getI() > maxParam)
-			{
-				maxParam = points[i].getI();
-				result = i;
-			}
-		}
-		return result;
-	}
-	else if (dir == 3)
-	{
-		int minParam = FIELD_SIZE;
-		int result = 0;
-		for (int i = 0; i < points.size(); i++)
-		{
-			if (points[i].getJ() < minParam)
-			{
-				minParam = points[i].getJ();
-				result = i;
-			}
-		}
-		return result;
-	}
+	return result;
 }
-std::tuple < std::string, int, std::vector<std::string>> parsingString(const char ** argv)
+int firstDirection_calcLastPoint(std::vector<Point> points)
+{
+	int maxParam = 0;
+	int result = 0;
+	for (int i = 0; i < points.size(); i++)
+	{
+		if (points[i].getJ() > maxParam)
+		{
+			maxParam = points[i].getJ();
+			result = i;
+		}
+	}
+	return result;
+}
+int secondDirection_calcLastPoint(std::vector<Point> points)
+{
+	int maxParam = 0;
+	int result = 0;
+	for (int i = 0; i < points.size(); i++)
+	{
+		if (points[i].getI() > maxParam)
+		{
+			maxParam = points[i].getI();
+			result = i;
+		}
+	}
+	return result;
+}
+
+int thirdDirection_calcLastPoint(std::vector<Point> points)
+{
+	int minParam = FIELD_SIZE;
+	int result = 0;
+	for (int i = 0; i < points.size(); i++)
+	{
+		if (points[i].getJ() < minParam)
+		{
+			minParam = points[i].getJ();
+			result = i;
+		}
+	}
+	return result;
+}
+std::unordered_map<int, calcFunc> initLastPointsMap()
+{
+	std::unordered_map<int, calcFunc> result{ { 0, zeroDirection_calcLastPoint },
+											  { 1, firstDirection_calcLastPoint},
+											  {2, secondDirection_calcLastPoint},
+											  {3, thirdDirection_calcLastPoint }};
+	return result;
+
+}
+std::tuple < std::string, int, std::vector<std::string>> parsingString(const int argumentsNumber, const char ** argv)
 {
 	int rounds_number = DEFAULT_ROUNDS_NUMBER;
 	std::vector<std::string> playersTypes;
@@ -164,8 +173,7 @@ std::tuple < std::string, int, std::vector<std::string>> parsingString(const cha
 	std::unordered_map <std::string, const std::string, std::hash<std::string>> PLAYERS_TYPES{ {"r", RANDOM },
 																						 { "o", OPTIMAL },
 																						 { "u", USER } };
-	int NUMBER_OF_ARGUMENTS = strlen(argv*);
-	for (int i = FIRST_ARGUMENT_NUMBER; i < NUMBER_OF_ARGUMENTS; i++)
+	for (int i = FIRST_ARGUMENT_NUMBER; i < argumentsNumber; i++)
 	{
 		if (argv[i] == SHOW_HELP_KEY_SHORT || argv[i] == SHOW_HELP_KEY_LONG)
 		{

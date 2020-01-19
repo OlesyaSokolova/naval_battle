@@ -15,7 +15,7 @@ Game::Game(std::vector<std::string> playerTypes, int roundsNumber = 1)
 }
 void Game::start()
 {
-	int winnerIndex = 0;
+	int winnerIndex = UNKNOWN_WINNER;
 	for (int i = 0; i < this->roundsNumber_; i++)
 	{
 		system("cls");
@@ -23,12 +23,11 @@ void Game::start()
 		{
 			players_[i]->initPrivateData();
 		}
-		winnerIndex = this->round();
-		if (roundsNumber_ > 1)
+		winnerIndex = this->round(i);
+		if (roundsNumber_ > ONE_ROUND)
 		{
 			this->view_->showWinner(winnerIndex);
-		}
-		
+		}		
 		this->statistic_[winnerIndex]++;
 	}
 	this->view_->showStatistic(this->statistic_);
@@ -41,10 +40,10 @@ ShotResult Game::shoot(int playerIndex, Point p)
 	this->players_[enemyIndex]->setEnemyShotResult(p, res);
 	return res;
 }
-int Game::round()
+int Game::round(int currentRoundNumber)
 {
 	srand(time(NULL));
-	this->view_->initPlayers();
+	this->view_->initPlayers(currentRoundNumber, this->roundsNumber_);
 	int firstPlayer = this->view_->chooseFirstPlayer();
 	int playerIndex = firstPlayer;
 	ShotResult result;

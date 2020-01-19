@@ -2,7 +2,7 @@
 int main(const int argc, const char** argv)
 {
 
-	std::tuple< std::string, int, std::vector<std::string>> arguments = parsingString(argv);
+	std::tuple< std::string, int, std::vector<std::string>> arguments = parsingString(argc, argv);
 	if (std::get<0>(arguments) != EMPTY_STRING)
 	{
 

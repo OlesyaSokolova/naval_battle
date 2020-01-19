@@ -5,7 +5,7 @@ class View
 public:
 	View();
 	virtual ~View() = default;
-	void initPlayers();
+	void initPlayers(int currentRoundNumber, int roundsNumber);
 	int chooseFirstPlayer();
 	Point playerTurn(int playerIndex);
 	void showPlayerField(const Player* player);

@@ -110,7 +110,7 @@ void View::showFields()
 	int lineNumber = 0;
 	std::cout << "  ";
 	for (int j = 0; j < FIELD_SIZE; j++)
-	{
+	{	
 		std::cout << symbol(j) << " ";
 	}
 	std::cout << LONG_DELIMITER + "  ";
@@ -195,13 +195,21 @@ void View::setAllUserShips()
 	}
 	player->remainedShipsNumber_ = SHIPS_NUMBER;
 }
-void View::initPlayers()
+void View::initPlayers(int currentRoundNumber, int roundsNumber)
 {	
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	system("color 17");
-	std::cout << " Hello! Let's play. If you are ready, please, press ENTER." << std::endl;
-	getchar();
-	system("cls");
+	if (currentRoundNumber == FIRST_ROUND )
+	{
+		std::cout << " Hello! Let's play. Information about this game:\n" <<
+			"first player: " << this->players_[FIRST]->getPlayerType() << END_LINE <<
+			"second player: " << this->players_[(FIRST+INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() << END_LINE <<
+			"number of rounds: " << roundsNumber << END_LINE <<
+			"If you are ready, please, press ENTER." << std::endl;
+		getchar();
+		system("cls");
+	}
+	
 	if (userIndex_ != USER_DOESNT_PARTICIPATE)
 	{
 		setAllUserShips();
@@ -295,8 +303,7 @@ void View::updateFields(int playerIndex, ShotResult result)
 		else
 		{
 			showFields();
-		}
-		
+		}		
 	}
 }
 //View * createView(std::string viewType)
@@ -346,7 +353,15 @@ void View::showWinner(int winnerIndex)
 	std::cout << "Winner: " << indexToString(winnerIndex) << std::endl;
 	if (userIndex_ != USER_DOESNT_PARTICIPATE)
 	{
-		std::cout << "Congratulations! ;-)" << std::endl;
+		if (winnerIndex == userIndex_)
+		{
+			std::cout << "Congratulations! ;-)\n" << std::endl;
+		}
+		else
+		{
+			std::cout << "Unfortunately, you lose.\n" << std::endl;
+		}
+	
 	}
 	std::cout << "Please press ENTER to continue." << std::endl;
 	getchar();
@@ -362,9 +377,20 @@ void View::showStatistic(int statistic[PLAYERS_NUMBER])
 		"(" << this->players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() << ")" <<
 		" won " << statistic[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER] << 
 		 " times;" << std::endl;
-
-	int winnerIndex = statistic[FIRST] > statistic[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER] ? statistic[FIRST] : statistic[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER];
-	std::cout << "Final winner: " << indexToString(winnerIndex) << " (" << this->players_[winnerIndex]->getPlayerType() << ")" << std::endl;
+	int firstPlayerVictories = statistic[FIRST];
+	int secondPlayerVictories = statistic[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER];
+	if (firstPlayerVictories == secondPlayerVictories)
+	{
+		std::cout << "Friendship won :)" << std::endl;
+	}
+	else
+	{
+		int winnerIndex = firstPlayerVictories > secondPlayerVictories ? FIRST : (FIRST + INDEX_SHIFT) % PLAYERS_NUMBER;
+		std::string winner = indexToString(winnerIndex);
+		std::string winnerType = this->players_[winnerIndex]->getPlayerType();
+		std::cout << "Final winner: " << winner << " (" << winnerType << ")" << std::endl;
+	}
+	
 	std::cout << "Please press ENTER to quit." << std::endl;
 	getchar();
 }

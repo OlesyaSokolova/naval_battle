@@ -7,7 +7,7 @@ public:
 	Game(std::vector<std::string> playerTypes, int roundsNumber);
 	~Game() = default;
 	void start();
-	int round();
+	int round(int currentRoundNumber);
 	ShotResult shoot(int playerIndex, Point p);
 private:
 	View * view_;

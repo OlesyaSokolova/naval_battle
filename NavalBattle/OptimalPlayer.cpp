@@ -1,7 +1,7 @@
 #include "ProxyRandom.h"
 #include <iostream>
 #include <time.h>
-
+#include <functional>
 
 void OptimalPlayer::initPrivateData()
 {
@@ -121,16 +121,11 @@ Point OptimalPlayer::chooseRightPoint()
 	{
 		bool pointIsCorrect = false;
 		bool pointCanBeUsed = false;
-		int k = 0; 
+		std::unordered_map<int, calcFunc>calcLastPoint = initLastPointsMap();
 		while (pointIsCorrect == false || pointCanBeUsed == false)
-		{
-			k++;
-			if (k == 3)
-			{
-				k = 90;
-				getchar();
-			}
-			int lastPointIndex = calcLastPoint(this->dir_, this->successfulPoints);
+		{			 
+			std::function<int(std::vector<Point> points)> funcPtr = calcLastPoint[this->dir_];
+			int lastPointIndex = funcPtr(this->successfulPoints);
 			int di = pointAreaDi[this->dir_];
 			int dj = pointAreaDj[this->dir_];
 			int i = di * INDEX_SHIFT + successfulPoints[lastPointIndex].getI();

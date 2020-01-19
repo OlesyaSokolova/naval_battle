@@ -2,6 +2,8 @@
 #include <time.h>
 #include <tuple>
 
+typedef int(*calcFunc)(std::vector<Point> points);
+
 inline int indexToArrayIndex(int & i)
 {
 	return i - 1;
@@ -28,7 +30,11 @@ int calcDif(int x, int y);
 std::vector<std::string> parsingString(std::string line, std::string delim);
 Point randomPointOnLine(int line);
 void shufflePoints(std::vector<Point>& vec);
-int calcLastPoint(int dir, std::vector<Point> points);
+int zeroDirection_calcLastPoint(std::vector<Point> points);
+int firstDirection_calcLastPoint(std::vector<Point> points);
+int secondDirection_calcLastPoint(std::vector<Point> points);
+int thirdDirection_calcLastPoint(std::vector<Point> points);
+std::unordered_map<int, calcFunc> initLastPointsMap();
 bool isAccessibleForTurn(const Point& point);
 inline std::string indexToString(int i)
 {
@@ -41,5 +47,5 @@ inline std::string indexToString(int i)
 		return "second player";
 	}
 }
-std::tuple <std::string, int, std::vector<std::string>> parsingString(const char ** argv);
+std::tuple <std::string, int, std::vector<std::string>> parsingString(const int argumentsNumber, const char ** argv);
 void printHelp();
