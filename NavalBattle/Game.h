@@ -1,11 +1,10 @@
-
 #include <string>
 #include "View.h"
 
 class Game
 {
 public:
-	Game(std::vector<std::string> playerTypes, std::string viewType, int roundsNumber);
+	Game(std::vector<std::string> playerTypes, int roundsNumber);
 	~Game() = default;
 	void start();
 	int round();

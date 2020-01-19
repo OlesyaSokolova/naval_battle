@@ -1,6 +1,31 @@
-
 #include <string>
+#include <unordered_map>
+#include <algorithm>
 
+const int NUMBER_OF_ARGUMENTS = 6;
+const int FIRST_ARGUMENT_NUMBER = 1;
+const std::string ROUNDS_NUMBER_KEY_SHORT = "-c";
+const std::string ROUNDS_NUMBER_KEY_LONG = "--count";
+const std::string FIRST_PLAYER_TYPE_KEY_SHORT = "-f";
+const std::string FIRST_PLAYER_TYPE_KEY_LONG = "--first";
+const std::string SECOND_PLAYER_TYPE_KEY_SHORT = "-s";
+const std::string SECOND_PLAYER_TYPE_KEY_LONG = "--second";
+const std::string SHOW_HELP_KEY_SHORT = "-h";
+const std::string SHOW_HELP_KEY_LONG = "--help";
+
+const std::vector<std::string> HELP = { "Hello! This game is Naval Battle.\n",
+										"First of all, make sure that you remember the rules.\n",
+										"You can play with computer of watch how two automatic gamers play.\n",
+										"You can not play with another user!\n",
+										"To start, specify such parameters as number of rounds and types of players:\n",
+										"-c (--count) - number of rounds (default: 1); \n",
+										"-f (--first) - type of first player (default: random);\n",
+										"-s (--second) - type of second player (default: random).\n",
+										"(legend: r = random, o = optimal, u = user.)\n"
+										"Example:\n",
+										"-c 3 -f o -s u\n\n",
+										"Please press ENTER and restart the game."
+										};
 const int FIELD_SIZE = 10;
 const int DIRECTIONS_NUMBER = 4;
 
@@ -94,3 +119,7 @@ const enum ConsoleColor {
 	LightBlue = 9,
 	White = 15
 };
+const int DEFAULT_ROUNDS_NUMBER = 1;
+const std::string DEFAULT_PLAYER_TYPE = RANDOM;
+
+

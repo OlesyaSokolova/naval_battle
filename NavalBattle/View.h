@@ -1,6 +1,5 @@
 #include "Functions.h"
-#include <algorithm>
-#include <unordered_map>
+
 class View
 {
 public:

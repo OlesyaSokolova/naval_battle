@@ -1,5 +1,5 @@
 #include "Functions.h"
-
+#include <iostream>
 Player * createPlayer(std::string playerType)
 {
 	if (playerType == RANDOM)
@@ -152,4 +152,51 @@ int calcLastPoint(int dir, std::vector<Point> points)
 		}
 		return result;
 	}
+}
+std::tuple < std::string, int, std::vector<std::string>> parsingString(const char ** argv)
+{
+	int rounds_number = DEFAULT_ROUNDS_NUMBER;
+	std::vector<std::string> playersTypes;
+	std::string firstPlayerType = DEFAULT_PLAYER_TYPE;
+	std::string secondPlayerType = DEFAULT_PLAYER_TYPE;
+	std::string help = EMPTY_STRING;
+
+	std::unordered_map <std::string, const std::string, std::hash<std::string>> PLAYERS_TYPES{ {"r", RANDOM },
+																						 { "o", OPTIMAL },
+																						 { "u", USER } };
+	int NUMBER_OF_ARGUMENTS = strlen(argv*);
+	for (int i = FIRST_ARGUMENT_NUMBER; i < NUMBER_OF_ARGUMENTS; i++)
+	{
+		if (argv[i] == SHOW_HELP_KEY_SHORT || argv[i] == SHOW_HELP_KEY_LONG)
+		{
+			help = argv[i];
+			break;
+		}
+		if (argv[i] == ROUNDS_NUMBER_KEY_SHORT || argv[i] == ROUNDS_NUMBER_KEY_LONG)
+		{
+			rounds_number = atoi(argv[i + DELIMITER_1.length()]);
+		}
+		if (argv[i] == FIRST_PLAYER_TYPE_KEY_SHORT || argv[i] == FIRST_PLAYER_TYPE_KEY_LONG)
+		{
+			std::string type = argv[i + DELIMITER_1.length()];
+			firstPlayerType = PLAYERS_TYPES[type];
+			
+		}
+		if (argv[i] == SECOND_PLAYER_TYPE_KEY_SHORT || argv[i] == SECOND_PLAYER_TYPE_KEY_LONG)
+		{
+			std::string type = argv[i + DELIMITER_1.length()];
+			secondPlayerType = PLAYERS_TYPES[type];
+		}
+	}
+	playersTypes.push_back(firstPlayerType);
+	playersTypes.push_back(secondPlayerType);
+	return std::make_tuple(help, rounds_number, playersTypes);
+}
+void printHelp()
+{
+	for (int i = 0; i < HELP.size(); i++)
+	{
+		std::cout << HELP[i];
+	}
+	getchar();
 }

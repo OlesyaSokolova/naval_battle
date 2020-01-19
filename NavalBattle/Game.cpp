@@ -2,7 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-Game::Game(std::vector<std::string> playerTypes, std::string viewType, int roundsNumber = 1)
+Game::Game(std::vector<std::string> playerTypes, int roundsNumber = 1)
 	:roundsNumber_(roundsNumber), statistic_{ 0 }
 {
 	for (int i = 0; i < PLAYERS_NUMBER; i++)
@@ -54,11 +54,11 @@ int Game::round()
 	{
 		Point p = view_->playerTurn(playerIndex);
 		result = shoot(playerIndex, p);
-		if (players_[FIRST]->getPlayerType() != USER && players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() != USER)
-		{
-			std::cout << indexToString(playerIndex) << ": " << p.getOriginalInput() << std::endl;	
-			std::this_thread::sleep_for(std::chrono::microseconds(2500000));
-		}
+		//if (players_[FIRST]->getPlayerType() != USER && players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() != USER)
+		//{
+		//	std::cout << indexToString(playerIndex) << ": " << p.getOriginalInput() << std::endl;	
+		//	std::this_thread::sleep_for(std::chrono::microseconds(2500000));
+		//}
 		
 		view_->updateFields(playerIndex, result);
 		playerIndex = nextPlayer(playerIndex, result);

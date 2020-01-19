@@ -1,5 +1,6 @@
 #include "Players.h"
 #include <time.h>
+#include <tuple>
 
 inline int indexToArrayIndex(int & i)
 {
@@ -40,3 +41,5 @@ inline std::string indexToString(int i)
 		return "second player";
 	}
 }
+std::tuple <std::string, int, std::vector<std::string>> parsingString(const char ** argv);
+void printHelp();
