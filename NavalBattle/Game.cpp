@@ -49,7 +49,7 @@ int Game::round(int currentRoundNumber)
 	ShotResult result;
 	int shipsNumberFirst = players_[FIRST]->getRemainedShipsNumber();
 	int shipsNumberSecond = players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getRemainedShipsNumber();
-	while (shipsNumberFirst > 0 && shipsNumberSecond > 0)
+	while (shipsNumberFirst > END_GAME_SHIPS_NUMBER && shipsNumberSecond > END_GAME_SHIPS_NUMBER)
 	{
 		Point p = view_->playerTurn(playerIndex);
 		result = shoot(playerIndex, p);

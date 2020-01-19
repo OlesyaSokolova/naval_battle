@@ -22,7 +22,7 @@ Point ProxyRandom::generateRandomPoint()
 	int vectorSize = this->pointsToUse.size();
 	int index = rand() % vectorSize;
 	Point point = this->pointsToUse[index];
-	std::swap(this->pointsToUse[index], this->pointsToUse[vectorSize - 1]);
+	std::swap(this->pointsToUse[index], this->pointsToUse[vectorSize - INDEX_SHIFT]);
 	this->pointsToUse.pop_back();
 	return point;
 }

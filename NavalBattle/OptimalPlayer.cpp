@@ -17,24 +17,24 @@ void OptimalPlayer::initPrivateData()
 	}
 	
 	this->playerType_ = OPTIMAL;
-	for (int i = 1; i <= 8; i++)
+	for (int i = 0 + INDEX_SHIFT; i < LINE_SIZE+INDEX_SHIFT; i++)
 	{
-		pointsOnLines[0].push_back(Point(1, i));
+		pointsOnLines[FIRST_DIRECTION].push_back(Point(FIRST_DIRECTION_I, i));
 	}
 
-	for (int i = 1; i <= 8; i++)
+	for (int i = 0 + INDEX_SHIFT; i < LINE_SIZE + INDEX_SHIFT; i++)
 	{
-		pointsOnLines[1].push_back(Point(i, 8));
+		pointsOnLines[SECOND_DIRECTION].push_back(Point(i, SECOND_DIRECTION_J));
 	}
 
-	for (int i = 1; i <= 8; i++)
+	for (int i = 0 + INDEX_SHIFT; i < LINE_SIZE + INDEX_SHIFT; i++)
 	{
-		pointsOnLines[2].push_back(Point(8, i));
+		pointsOnLines[THIRD_DIRECTION].push_back(Point(THIRD_DIRECTION_I, i));
 	}
 
-	for (int i = 1; i <= 8; i++)
+	for (int i = 0 + INDEX_SHIFT; i < LINE_SIZE + INDEX_SHIFT; i++)
 	{
-		pointsOnLines[3].push_back(Point(i, 1));
+		pointsOnLines[FOURS_DIRECTION].push_back(Point(i, FOURS_DIRECTION_J));
 	}
 
 	for (int i = 0; i < DIRECTIONS_NUMBER; i++)
@@ -79,7 +79,7 @@ Point OptimalPlayer::chooseRandomPoint()
 }
 bool OptimalPlayer::canBeUsed(Point p)
 {
-	if (this->pointsToUse[p.getI()][p.getJ()].getUsedTimes() == 0)
+	if (this->pointsToUse[p.getI()][p.getJ()].getUsedTimes() == POINT_WAS_NOT_USED)
 	{	
 			return true;
 	}
@@ -100,11 +100,11 @@ void OptimalPlayer::setMyShotResult(Point p, ShotResult result)
 			this->successfulPoints.push_back(p);
 		}	
 	}
-	else if (this->successfulPoints.size() == 1)
+	else if (this->successfulPoints.size() == SUCCESSFUL_DIRECTION_IS_NOT_DEFINED)
 	{
 		this->dir_ = (this->dir_ + INDEX_SHIFT) % DIRECTIONS_NUMBER;
 	}
-	else if(this->successfulPoints.size() > 1)
+	else if(this->successfulPoints.size() > SUCCESSFUL_DIRECTION_IS_NOT_DEFINED)
 	{
 		this->dir_ = (this->dir_ + INDEX_SHIFT + INDEX_SHIFT) % DIRECTIONS_NUMBER;
 	}
@@ -113,9 +113,9 @@ void OptimalPlayer::setMyShotResult(Point p, ShotResult result)
 Point OptimalPlayer::chooseRightPoint()
 {
 	Point p;
-	if (this->successfulPoints.size() == 1)
+	if (this->successfulPoints.size() == SUCCESSFUL_DIRECTION_IS_NOT_DEFINED)
 	{
-		p = this->randPointNearPoint(successfulPoints[0]);
+		p = this->randPointNearPoint(successfulPoints[FIRST]);
 	}
 	else
 	{
@@ -160,7 +160,7 @@ Point OptimalPlayer::randPointNearPoint(Point p)
 Point OptimalPlayer::choosePoint()
 {
 	Point p;
-	if (successfulPoints.size() == 0)
+	if (successfulPoints.size() == NO_SUCCESSFUL_SHOTS)
 	{
 		p = this->chooseRandomPoint();
 	}
@@ -183,7 +183,7 @@ std::vector <Point>  OptimalPlayer::generateRandomPositionOptimally(int shipSize
 	int line = rand() % DIRECTIONS_NUMBER;
 	int lineSize = this->pointsOnLines[line].size();
 	std::vector<Point> position;
-	while (lineSize == 0)
+	while (lineSize == NO_POINTS_TO_USE)
 	{
 		line = (line + INDEX_SHIFT) % DIRECTIONS_NUMBER;
 		lineSize = this->pointsOnLines[line].size();
@@ -197,11 +197,11 @@ std::vector <Point>  OptimalPlayer::generateRandomPositionOptimally(int shipSize
 		if (fixed == false)
 		{
 			lineSize = this->pointsOnLines[line].size();;
-			if (lineSize == 0 || index == lineSize-1)
+			if (lineSize == NO_POINTS_TO_USE || index == lineSize - INDEX_SHIFT)
 			{
 				index = 0;
 				line = (line + INDEX_SHIFT) % DIRECTIONS_NUMBER;
-				while (this->pointsOnLines[line].size() == 0)
+				while (this->pointsOnLines[line].size() == NO_POINTS_TO_USE)
 				{
 					line = (line + INDEX_SHIFT) % DIRECTIONS_NUMBER;
 				}			

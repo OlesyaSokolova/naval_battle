@@ -2,10 +2,10 @@
 #include <iostream>
 
 Point::Point()
-	:i_(0), j_(0), i_j_{ END_STRING }, usedTimes_(0) {}
+	:i_(0), j_(0), i_j_{ END_STRING }, usedTimes_(POINT_WAS_NOT_USED) {}
 
 Point::Point(int i, int j)
-	: i_(i), j_(j), i_j_{(char)i + ADDENDUM_FOR_NUMBER, (char)j+ ADDENDUM_FOR_LETTER_LOWERCASE, END_STRING }, usedTimes_(0) {}
+	: i_(i), j_(j), i_j_{(char)i + ADDENDUM_FOR_NUMBER, (char)j+ ADDENDUM_FOR_LETTER_LOWERCASE, END_STRING }, usedTimes_(POINT_WAS_NOT_USED) {}
 
 int Point::getI() const
 {

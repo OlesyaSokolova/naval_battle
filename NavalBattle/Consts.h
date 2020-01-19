@@ -35,22 +35,30 @@ const int CRUISERS_NUMBER = 2;
 const int DESTROYERS_NUMBER = 3;
 const int TORPEDO_BOATS_NUMBER = 4;
 
-const int BATTLESHIP_ID = 0;
-const int CRUISER_ID = 1;
-const int DESTROYER_ID = 3;
-const int TORPEDO_BOAT_ID = 4;
-
 const int BATTLESHIP_SIZE = 4;
 const int CRUISER_SIZE = 3;
 const int DESTROYER_SIZE = 2;
 const int TORPEDO_BOAT_SIZE = 1;
 const int KILLED_SHIP_SIZE = 0;
-
+const int NO_SHIPS = 0;
 const int SHIP_TYPES_NUMBER = 4;
 
 const int SHIPS_NUMBER = BATTLESHIPS_NUMBER + CRUISERS_NUMBER + DESTROYERS_NUMBER + TORPEDO_BOATS_NUMBER;
 const int PLAYERS_NUMBER = 2;
 const int DIRECTIONS = 8;
+
+const int FIRST_DIRECTION = 0;
+const int SECOND_DIRECTION = 1;
+const int THIRD_DIRECTION = 2;
+const int FOURS_DIRECTION = 3;
+
+const int FIRST_DIRECTION_I = 1;
+const int SECOND_DIRECTION_J = 8;
+const int THIRD_DIRECTION_I = 8;
+const int FOURS_DIRECTION_J = 1;
+
+const int LINE_SIZE = 8;
+
 const int POINT_PARAMETERS = 2;
 const int POINTS_NUMBER_ON_LINE = 8;
 
@@ -166,3 +174,9 @@ const std::string BLUE_SCREEN_WHITE_TEXT = "color 17";
 const int USER_DIDNT_ENTERED_ANYTHING = 0;
 const int I_RANDOM = -1;
 const int J_RANDOM = -1;
+const int ROUND_NUMBER_INDEX = 1;
+const int USER_TYPES_INDEX = 2;
+const int SUCCESSFUL_DIRECTION_IS_NOT_DEFINED = 1;
+const int NO_SUCCESSFUL_SHOTS = 0;
+const int NO_POINTS_TO_USE = 0;
+const int POINT_WAS_NOT_USED = 0;

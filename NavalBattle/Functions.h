@@ -6,7 +6,7 @@ typedef int(*calcFunc)(std::vector<Point> points);
 
 inline int indexToArrayIndex(int & i)
 {
-	return i - 1;
+	return i - INDEX_SHIFT;
 }
 Player * createPlayer(std::string playerType);
 inline int nextPlayer(int playerIndex, ShotResult result)
@@ -30,10 +30,10 @@ int calcDif(int x, int y);
 std::vector<std::string> parsingString(std::string line, std::string delim);
 Point randomPointOnLine(int line);
 void shufflePoints(std::vector<Point>& vec);
-int zeroDirection_calcLastPoint(std::vector<Point> points);
 int firstDirection_calcLastPoint(std::vector<Point> points);
 int secondDirection_calcLastPoint(std::vector<Point> points);
 int thirdDirection_calcLastPoint(std::vector<Point> points);
+int foursDirection_calcLastPoint(std::vector<Point> points);
 std::unordered_map<int, calcFunc> initLastPointsMap();
 bool isAccessibleForTurn(const Point& point);
 inline std::string indexToString(int i)

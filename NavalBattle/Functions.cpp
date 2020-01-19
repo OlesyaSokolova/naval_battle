@@ -66,26 +66,26 @@ std::vector<std::string> parsingString(std::string line, std::string delim)
 }
 Point randomPointOnLine(int line)
 {
-	int i = 1, j = 1;
-	if (line == 0)
+	int i = 0 + INDEX_SHIFT, j = 0 + INDEX_SHIFT;
+	if (line == FIRST_DIRECTION)
 	{
-		i = 1;
-		j = rand() % 8 + 1;
+		i = FIRST_DIRECTION_I;
+		j = rand() % LINE_SIZE + INDEX_SHIFT;
 	}
-	if (line == 1)
+	if (line == SECOND_DIRECTION)
 	{
-		i = rand() % 8 + 1;
-		j = 8;
+		i = rand() % LINE_SIZE + INDEX_SHIFT;
+		j = SECOND_DIRECTION_J;
 	}
-	if (line == 2)
+	if (line == THIRD_DIRECTION)
 	{
-		i = 8;
-		j = rand() % 8 + 1;
+		i = THIRD_DIRECTION_I;
+		j = rand() % LINE_SIZE + INDEX_SHIFT;
 	}
-	else if (line == 3)
+	else if (line == FOURS_DIRECTION)
 	{
-		i = rand() % 8 + 1;
-		j = 1;
+		i = rand() % LINE_SIZE + INDEX_SHIFT;
+		j = FOURS_DIRECTION_J;
 	}
 	return Point(i, j);
 }
@@ -96,7 +96,7 @@ void shufflePoints(std::vector<Point>& vec)
 		std::swap(vec[i], vec[rand()%vec.size()]);
 	}
 }
-int zeroDirection_calcLastPoint(std::vector<Point> points)
+int firstDirection_calcLastPoint(std::vector<Point> points)
 {
 	int minParam = FIELD_SIZE;
 	int result = 0;
@@ -110,7 +110,7 @@ int zeroDirection_calcLastPoint(std::vector<Point> points)
 	}
 	return result;
 }
-int firstDirection_calcLastPoint(std::vector<Point> points)
+int secondDirection_calcLastPoint(std::vector<Point> points)
 {
 	int maxParam = 0;
 	int result = 0;
@@ -124,7 +124,7 @@ int firstDirection_calcLastPoint(std::vector<Point> points)
 	}
 	return result;
 }
-int secondDirection_calcLastPoint(std::vector<Point> points)
+int thirdDirection_calcLastPoint(std::vector<Point> points)
 {
 	int maxParam = 0;
 	int result = 0;
@@ -139,7 +139,7 @@ int secondDirection_calcLastPoint(std::vector<Point> points)
 	return result;
 }
 
-int thirdDirection_calcLastPoint(std::vector<Point> points)
+int foursDirection_calcLastPoint(std::vector<Point> points)
 {
 	int minParam = FIELD_SIZE;
 	int result = 0;
@@ -155,10 +155,10 @@ int thirdDirection_calcLastPoint(std::vector<Point> points)
 }
 std::unordered_map<int, calcFunc> initLastPointsMap()
 {
-	std::unordered_map<int, calcFunc> result{ { 0, zeroDirection_calcLastPoint },
-											  { 1, firstDirection_calcLastPoint},
-											  {2, secondDirection_calcLastPoint},
-											  {3, thirdDirection_calcLastPoint }};
+	std::unordered_map<int, calcFunc> result{ { FIRST_DIRECTION, firstDirection_calcLastPoint },
+											  { SECOND_DIRECTION, secondDirection_calcLastPoint},
+											  { THIRD_DIRECTION, thirdDirection_calcLastPoint},
+											  { FOURS_DIRECTION, foursDirection_calcLastPoint }};
 	return result;
 
 }

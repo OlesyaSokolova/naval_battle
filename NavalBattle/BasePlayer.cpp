@@ -4,7 +4,7 @@ void Player::initPrivateData()
 	initMyField();
 	initEnemyField();
 	initMyShips();
-	this->remainedShipsNumber_ = 0;
+	this->remainedShipsNumber_ = NO_SHIPS;
 	infoPoints_.clear();
 	playerType_ = EMPTY_STRING;
 }
@@ -14,7 +14,7 @@ Player::Player()
 }
 void Player::initMyShips()
 {
-	if (myShips_.size() != 0)
+	if (myShips_.size() != NO_SHIPS)
 	{
 		myShips_.clear();
 	}
