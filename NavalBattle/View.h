@@ -9,7 +9,7 @@ public:
 	int chooseFirstPlayer();
 	Point playerTurn(int playerIndex);
 	void showPlayerField(const Player* player);
-	void initPlayerField(const Player* player);
+	//void initPlayerField(const Player* player);
 	void updateFields(int playerIndex, ShotResult result);
 	std::vector<Point> readPosition();
 	void setAllUserShips();
@@ -17,7 +17,7 @@ public:
 	void addPlayers(std::vector<Player*> players);
 	void showWinner(int winnerIndex);
 	void showStatistic(int statistic[PLAYERS_NUMBER]);
-	void showFieldsWithUser();
+	//void showFieldsWithUser();
 	void showFields();
 private:
 	std::vector<Player*> players_;

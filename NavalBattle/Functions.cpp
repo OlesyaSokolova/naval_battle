@@ -182,17 +182,17 @@ std::tuple < std::string, int, std::vector<std::string>> parsingString(const int
 		}
 		if (argv[i] == ROUNDS_NUMBER_KEY_SHORT || argv[i] == ROUNDS_NUMBER_KEY_LONG)
 		{
-			rounds_number = atoi(argv[i + DELIMITER_1.length()]);
+			rounds_number = atoi(argv[i + DELIMITER_STRING_GAP.length()]);
 		}
 		if (argv[i] == FIRST_PLAYER_TYPE_KEY_SHORT || argv[i] == FIRST_PLAYER_TYPE_KEY_LONG)
 		{
-			std::string type = argv[i + DELIMITER_1.length()];
+			std::string type = argv[i + DELIMITER_STRING_GAP.length()];
 			firstPlayerType = PLAYERS_TYPES[type];
 			
 		}
 		if (argv[i] == SECOND_PLAYER_TYPE_KEY_SHORT || argv[i] == SECOND_PLAYER_TYPE_KEY_LONG)
 		{
-			std::string type = argv[i + DELIMITER_1.length()];
+			std::string type = argv[i + DELIMITER_STRING_GAP.length()];
 			secondPlayerType = PLAYERS_TYPES[type];
 		}
 	}

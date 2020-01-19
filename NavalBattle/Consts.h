@@ -57,9 +57,41 @@ const int POINTS_NUMBER_ON_LINE = 8;
 enum PointCondition { blank = (int)' ', ship = (int)'x', enemyInjured = (int)'#', enemyMissed = (int)'o'};
 enum ShotResult {unknown = (int)' ', missed = (int)'o', injured = (int)'#', killed};
 
-const std::string DELIMITER_1 = " ";
-const char DELIMITER_2 = '\n';
+const std::string DELIMITER_STRING_GAP = " ";
+const std::string DELIMITER_STRING_DOUBLE_GAP = "  ";
 const std::string LONG_DELIMITER = "       ";
+const char DELIMITER_LINE = '\n';
+const char DELIMITER_GAP = ' ';
+const char DELIMITER_BRACKET_OPEN = '(';
+const char DELIMITER_BRACKET_CLOSE = ')';
+const char DELIMITER_DOT = '.';
+const char DELIMITER_COMMA = ',';
+const std::string DELIMITER_COLON = ": ";
+
+const std::string GETCHAR = "Please press ENTER ";
+const std::string UNKNOWN_WRONG_INPUT = "Wrong input.";
+const std::string WRONG_CURRENT_POINT_INPUT = "Wrong point input: ";
+const std::string WRONG_CURRENT_POINT_OUT_OF_FIELD_RANGES = "This point is out of field ranges: ";
+const std::string WRONG_CURRENT_POINT_ALREADY_CHECKED = "You have already checked this point: ";
+const std::string SUGGESTION_TO_TRY_AGAIN = "Please, try again";
+const std::string TO_QUIT = "to quit.";
+const std::string TO_CONTINUE = "to continue.";
+const std::string TO_CHECK_POINT_AT_USER_FIELD = "to check this point at your field.";
+const std::string TO_SET_USER_SHIPS_RANDOMLY = "Ok! Your ships will be set randomly.";
+const std::string TO_START= "if you are ready to start.";
+const std::string USER_WON = "Congratulations!";
+const std::string USER_LOSE = "Unfortunately, you lose.";
+const std::string NOBODY_WON = "Friendship won";
+const std::string SMILE = ":)";
+const std::string CHOOSE_FIRST_PLAYER = "Well ok now let's choose the player who will start: ";
+const std::string SUGGESTION_TO_ENTER_POINT = "Enter a point to shoot:";
+const std::string SUGGESTION_TO_SET_SHIPS_RANDOMLY = "If you are lazy, bot can do it for you randomly, just type \"r\":";
+const std::string SUGGESTION_TO_SET_SHIPS = "Set your ships.";
+const std::string USER_FIELD = "This is your field:";
+const std::string USER_ENEMY_FIELD = "And this is your enemy's field:";
+const std::string FIRST_FIELD = "First player's field:";
+const std::string SECOND_FIELD = "Second player's field:";
+
 const std::string BATTLESHIP = "Battleship";
 const std::string CRUISER = "Cruiser";
 const std::string DESTROYER = "Destroyer";
@@ -78,7 +110,9 @@ const char END_LINE = '\n';
 const char ADDENDUM_FOR_NUMBER = '0';
 const char ADDENDUM_FOR_LETTER_UPPERCASE = 'A';
 const char ADDENDUM_FOR_LETTER_LOWERCASE = 'a';
-
+const char RANDOM_KEY_LOWERCASE = 'r';
+const char RANDOM_KEY_UPPERCASE = 'R';
+const int RANDOM_KEY_POINT_PARAMETERS = 1;
 const char FIRST_NUMBER = '0';
 const char LAST_NUMBER = '9';
 const char FIRST_LETTER_UPPERCASE = 'A';
@@ -125,5 +159,7 @@ const enum ConsoleColor {
 };
 const int DEFAULT_ROUNDS_NUMBER = 1;
 const std::string DEFAULT_PLAYER_TYPE = RANDOM;
-
-
+const int CHOOSING_PLAYER_SLEEP = 2000000;
+const int SHOW_COMPUTER_TURN_SLEEP = 2500000;
+const std::string BLUE_SCREEN_WHITE_TEXT = "color 17";
+const int USER_DIDNT_ENTERED_ANYTHING = 0;

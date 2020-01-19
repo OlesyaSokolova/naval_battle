@@ -53,12 +53,11 @@ int Game::round(int currentRoundNumber)
 	{
 		Point p = view_->playerTurn(playerIndex);
 		result = shoot(playerIndex, p);
-		//if (players_[FIRST]->getPlayerType() != USER && players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() != USER)
-		//{
-		//	std::cout << indexToString(playerIndex) << ": " << p.getOriginalInput() << std::endl;	
-		//	std::this_thread::sleep_for(std::chrono::microseconds(2500000));
-		//}
-		
+		if (players_[FIRST]->getPlayerType() != USER && players_[(FIRST + INDEX_SHIFT) % PLAYERS_NUMBER]->getPlayerType() != USER)
+		{
+			std::cout << indexToString(playerIndex) << DELIMITER_COLON << p.getOriginalInput() << std::endl;
+			std::this_thread::sleep_for(std::chrono::microseconds(SHOW_COMPUTER_TURN_SLEEP));
+		}	
 		view_->updateFields(playerIndex, result);
 		playerIndex = nextPlayer(playerIndex, result);
 		shipsNumberFirst = players_[FIRST]->getRemainedShipsNumber();

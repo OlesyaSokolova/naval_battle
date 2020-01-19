@@ -18,7 +18,7 @@ UserPlayer::UserPlayer()
 
 Point UserPlayer::choosePoint()
 {
-	std::cout << "Enter a point to shoot:";
+	std::cout << SUGGESTION_TO_ENTER_POINT;
 	InfoPoint p;
 	p.readPoint();
 	return p;
