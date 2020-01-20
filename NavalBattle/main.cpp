@@ -1,9 +1,9 @@
 #include "Game.h"
+using namespace Sokolova;
 int main(const int argc, const char** argv)
 {
-
 	std::tuple< std::string, int, std::vector<std::string>> arguments = parsingString(argc, argv);
-	if (std::get<0>(arguments) != EMPTY_STRING)
+	if (std::get<HELP_INDEX>(arguments) != EMPTY_STRING)
 	{
 			printHelp();
 		    return 0;

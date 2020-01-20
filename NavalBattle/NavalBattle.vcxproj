@@ -128,13 +128,16 @@
     <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="Consts.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Players.h" />
+    <ClInclude Include="OptimalPlayer.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="ProxyRandom.h" />
+    <ClInclude Include="RandomPlayer.h" />
     <ClInclude Include="Ships.h" />
+    <ClInclude Include="UserPlayer.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

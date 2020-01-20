@@ -14,19 +14,6 @@ const std::string SECOND_PLAYER_TYPE_KEY_LONG = "--second";
 const std::string SHOW_HELP_KEY_SHORT = "-h";
 const std::string SHOW_HELP_KEY_LONG = "--help";
 
-const std::vector<std::string> HELP = { "Hello! This game is Naval Battle.\n",
-										"First of all, make sure that you remember the rules.\n",
-										"You can play with computer of watch how two automatic gamers play.\n",
-										"You can not play with another user!\n",
-										"To start, specify such parameters as number of rounds and types of players:\n",
-										"-c (--count) - number of rounds (default: 1); \n",
-										"-f (--first) - type of first player (default: random);\n",
-										"-s (--second) - type of second player (default: random).\n",
-										"(legend: r = random, o = optimal, u = user.)\n"
-										"Example:\n",
-										"-c 3 -f o -s u\n\n",
-										"Please press ENTER and restart the game."
-										};
 const int FIELD_SIZE = 10;
 const int DIRECTIONS_NUMBER = 4;
 
@@ -88,6 +75,7 @@ const std::string TO_CONTINUE = "to continue.";
 const std::string TO_CHECK_POINT_AT_USER_FIELD = "to check this point at your field.";
 const std::string TO_SET_USER_SHIPS_RANDOMLY = "Ok! Your ships will be set randomly.";
 const std::string TO_START= "if you are ready to start.";
+const std::string TO_RESTART = "and restart the game.";
 const std::string USER_WON = "Congratulations!";
 const std::string USER_LOSE = "Unfortunately, you lose.";
 const std::string NOBODY_WON = "Friendship won";
@@ -116,6 +104,7 @@ const std::string CONSOLE_VIEW = "console";
 const std::string EMPTY_STRING = "";
 const char END_STRING = '\0';
 const char END_LINE = '\n';
+
 const char ADDENDUM_FOR_NUMBER = '0';
 const char ADDENDUM_FOR_LETTER_UPPERCASE = 'A';
 const char ADDENDUM_FOR_LETTER_LOWERCASE = 'a';
@@ -128,6 +117,7 @@ const char FIRST_LETTER_UPPERCASE = 'A';
 const char LAST_LETTER_UPPERCASE = 'J';
 const char FIRST_LETTER_LOWERCASE = 'a';
 const char LAST_LETTER_LOWERCASE = 'j';
+
 const int INIT_STATISTIC = 0;
 const int MAX_INPUT_LINE_SIZE = 11;
 const int INDEX_SHIFT = 1;
@@ -137,13 +127,13 @@ const int K_VARIANTS_FOR_LINES = 2;
 const int TIMES_TO_USE_POINT_OPTIMALLY = 2;
 const int ENDS_NUMBER = 2;
 const int END_GAME_SHIPS_NUMBER = 0;
-const int FIRST_DIRECTION = 0;
 const int MIN_I = 0;
 const int MIN_J = 0;
 const int USER_DOESNT_PARTICIPATE = -1;
 const int FIRST_ROUND = 0;
 const int UNKNOWN_WINNER = 0;
 const int ONE_ROUND = 1;
+
 const int pointAreaDi[DIRECTIONS_NUMBER] = { -1, 0, 1, 0 };
 const int pointAreaDj[DIRECTIONS_NUMBER] = { 0, 1, 0, -1 };
 const int shipFirstDi[DIRECTIONS] = { -1, 1, 1, 1, 1, -1, -1, -1 };
@@ -174,8 +164,11 @@ const std::string BLUE_SCREEN_WHITE_TEXT = "color 17";
 const int USER_DIDNT_ENTERED_ANYTHING = 0;
 const int I_RANDOM = -1;
 const int J_RANDOM = -1;
+
+const int HELP_INDEX = 0;
 const int ROUND_NUMBER_INDEX = 1;
 const int USER_TYPES_INDEX = 2;
+
 const int SUCCESSFUL_DIRECTION_IS_NOT_DEFINED = 1;
 const int NO_SUCCESSFUL_SHOTS = 0;
 const int NO_POINTS_TO_USE = 0;

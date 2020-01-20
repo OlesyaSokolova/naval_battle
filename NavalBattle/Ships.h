@@ -1,19 +1,20 @@
-
 #include <vector>
 #include "Consts.h"
-class Ship
-{
-public:
-	Ship() = default;
-	Ship(int size);
-	int getShipSize() const;
-	std::string getShipName() const;
-	int getShipNumber() const;
-	void decreaseSize();
-	~Ship() = default;
-private:
-	std::string shipName_;
-	int number_;
-	int shipSize_;
-	int size_;
-};
+namespace Sokolova {
+	class Ship
+	{
+	public:
+		Ship() = default;
+		Ship(int size);
+		~Ship() = default;	
+		int getShipSize() const;
+		std::string getShipName() const;
+		int getShipNumber() const;
+		void decreaseSize();		
+	private:
+		std::string shipName_;
+		int number_;
+		int shipSize_;
+		int size_;
+	};
+}
